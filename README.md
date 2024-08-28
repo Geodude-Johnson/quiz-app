@@ -1,4 +1,4 @@
-# GeoQuiz Guru
+# Quiz App Name
 ### Interview prep can be time consuming and overwhelming, but not anymore! 
 <img src="src/client/assets/image.png" style="border: 3px dashed green; border-radius: 50%; float: left; width: 100px; height: 100px;"/>
 
@@ -17,8 +17,8 @@
 2. [Authors](#authors)
 
 # Title 
+<p>Quiz App description</p>
 
----
 
 # Authors 
 | Name (First, Last)| Connect with Us  | 
