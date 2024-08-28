@@ -165,7 +165,9 @@ export default function NavBar() {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            <MenuIcon /> {/** three horizontal line logo 
+           * should have the same functionality as the navbar
+          */}
           </IconButton>
           <Typography
             variant="h6"

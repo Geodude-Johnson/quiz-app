@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,6 +7,7 @@ import {
 import './assets/styles.css';
 import HomePage from './home/homePage';
 import NavBar from './navBar';
+import * as React from 'react';
 
 const App: React.FC = () => {
   return (
