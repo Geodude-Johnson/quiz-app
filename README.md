@@ -2,9 +2,9 @@
 ### Interview prep can be time consuming and overwhelming, but not anymore! 
 <img src="src/client/assets/image.png" style="border: 3px dashed green; border-radius: 50%; float: left; width: 100px; height: 100px;"/>
 
-<div style="margin: 20px;">
+<div style="clear:both">
 
-<img src="https://cdn.iconscout.com/icon/free/png-512/free-javascript-1-225993.png?f=webp&w=512" alt = "javascipt logo" id="javascript" style="width: 40px; height: 40px"/>
+<img src="https://cdn.iconscout.com/icon/free/png-512/free-javascript-1-225993.png?f=webp&w=512" alt = "javascipt logo" id="javascript" style="width: 40px; height: 40px; margin-top:15px"/>
 <img src="https://cdn.iconscout.com/icon/free/png-512/free-typescript-1174965.png?f=webp&w=512" alt = "typescript logo" id = "typescript" style="width: 40px; height: 40px"/> 
 <img src="https://cdn.iconscout.com/icon/free/png-512/free-react-1-282599.png?f=webp&w=512" alt = "react js" id = "react" style="width: 40px; height: 40px"/> 
 <img src="https://mui.com/static/logo.png" id="npm" alt="npm logo" style="width: 40px; height: 40px"/>
@@ -14,7 +14,7 @@
 
 ## __Table of Contents__
 1. [Title](#title)
-5. [Authors](#authors)
+2. [Authors](#authors)
 
 # Title 
 
