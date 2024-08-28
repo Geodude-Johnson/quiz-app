@@ -8,7 +8,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const stylesHandler = MiniCssExtractPlugin.loader;
 
 const config = {
-  entry: './src/client/index.jsx',
+  entry: './src/client/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js', // Specify an output filename
@@ -45,22 +45,22 @@ const config = {
         exclude: /node_modules/,
         use: 'ts-loader',
         resolve: {
-          extensions: ['.ts', '.tsx'],
+            extensions: ['.ts', '.tsx', '.js', '.json'],
         },
     },
-       { test: /\.(js|jsx)$/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: [
-                '@babel/preset-env', '@babel/preset-react'
-              ],
-            },
-          },
-        ],
-        exclude: /node_modules/,
-      },
+    //    { test: /\.(js|jsx)$/,
+    //     use: [
+    //       {
+    //         loader: 'babel-loader',
+    //         options: {
+    //           presets: [
+    //             '@babel/preset-env', '@babel/preset-react'
+    //           ],
+    //         },
+    //       },
+    //     ],
+    //     exclude: /node_modules/,
+    //   },
     
       // Add your rules for custom modules here
       // Learn more about loaders from https://webpack.js.org/loaders/
