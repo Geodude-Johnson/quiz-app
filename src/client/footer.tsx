@@ -35,9 +35,6 @@ return ( <React.Fragment>
         </StyledFab>
         <Box sx={{ flexGrow: 1 }} />
         <IconButton color="inherit">
-          <SearchIcon /> 
-        </IconButton>
-        <IconButton color="inherit">
           <MoreIcon /> {/**three horizontal dots */}
         </IconButton>
       </Toolbar>

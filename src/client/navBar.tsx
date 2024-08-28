@@ -120,14 +120,6 @@ export default function NavBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
         <IconButton
           size="large"
           aria-label="show 1 new notifications"
@@ -180,12 +172,6 @@ export default function NavBar() {
         
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-           {/* Mail Icon with rendered amount of notifications showing in red (2) */}
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={2} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
             {/** Bell Icon with rendered amount of notifications showing in red (1) */}
             <IconButton
               size="large"
