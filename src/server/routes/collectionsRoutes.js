@@ -8,18 +8,18 @@ const {
   addCollection,
   deleteCollection,
   updateCollection,
+  deleteCard,
+  addCard,
 } = require("../controllers/collectionControllers");
 /* ==========> following routes for CRUD for collections <==========*/
 /* ==========> These routes will probably need to be protected <====*/
 
-// initalizing a new collection
 router.post("/", addCollection);
-// addding or deleting a single card from a specific collection => needs to have a card id in the body
-router.patch("/", updateCollection);
-// getting all the collecitons by the user
+// needs to have a card id in the body
+router.patch("/:id", updateCollection);
 router.get("/:user", getCollectionByUser);
 router.get("/:user/:id", getCollectionById);
-// deleting a whole collection
-router.delete("/", deleteCollection);
-
+router.delete("/:id", deleteCollection);
+router.delete("/:collectionId/:cardId", deleteCard);
+router.post("/:collectionId/:cardId", addCard);
 module.exports = router;

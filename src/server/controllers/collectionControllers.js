@@ -21,6 +21,14 @@ const collectionsController = {
     console.log("triggered getCollectionById");
     res.sendStatus(200);
   },
+  addCard: (req, res, next) => {
+    console.log("triggered addCard");
+    res.sendStatus(200);
+  },
+  deleteCard: (req, res, next) => {
+    console.log("triggered deleteCard");
+    res.sendStatus(200);
+  },
 };
 
 module.exports = collectionsController;

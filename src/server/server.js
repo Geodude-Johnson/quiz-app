@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const path = require("path");
 // const cookieParser = require("cookie-parser");
-const collectionsRouter = require("./routes/collectionsRoutes");
 
 const PORT = 3000;
 
@@ -14,10 +13,10 @@ app.use(express.static(path.resolve(__dirname, "../dist")));
 /*
 end point routes
 */
-// app.use("/login", require("./routes/collectionsRoutes"));
+app.use("/login", require("./routes/userRoutes"));
+app.use("/collections", require("./routes/collectionsRoutes"));
 // app.use("/search", require("./routes/searchRoutes"));
 // app.use("/home", require("./routes/loginRoutes"));
-app.use("/collections", collectionsRouter);
 
 app.use(
   "/",
