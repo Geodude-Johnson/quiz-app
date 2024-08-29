@@ -34,11 +34,13 @@
     "css-loader": "^7.1.2",
     "express": "^4.19.2",
     "graphql": "^16.9.0",
+    "graphql-http": "^1.22.1",
     "gts": "^5.3.1",
     "mini-css-extract-plugin": "^2.9.1",
     "nodemon": "^3.1.4",
     "react": "^18.3.1",
     "react-router-dom": "^6.26.1",
+    "ruru": "^2.0.0-beta.13",
     "workbox-webpack-plugin": "^7.1.0"
   }
 }
