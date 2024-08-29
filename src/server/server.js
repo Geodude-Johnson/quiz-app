@@ -16,16 +16,7 @@ app.use(express.static(path.resolve(__dirname, "../../dist")));
 /*
 end point routes
 */
-app.use((req, res) => {
-  return res
-    .status(200)
-    .sendFile(path.join(__dirname, "../../dist/index.html"), (err) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).send("An error occured");
-      }
-    });
-});
+
 app.use("/login", require("./routes/userRoutes"));
 app.use("/collections", require("./routes/collectionsRoutes"));
 // app.use("/search", require("./routes/searchRoutes"));
