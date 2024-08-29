@@ -18,8 +18,8 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
 
 function HomePage () {
   return (<>
-  <ColorButton variant="contained">MUI TEST BUTTON</ColorButton>
-  <Footer />
+    <ColorButton variant="contained">MUI TEST BUTTON</ColorButton>
+    <Footer />
   </>);
 }
 

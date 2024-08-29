@@ -8,6 +8,7 @@ import './assets/styles.css';
 import HomePage from './home/homePage';
 import NavBar from './navBar';
 import * as React from 'react';
+import LoginPage from './login/loginPage';
 
 const App: React.FC = () => {
   return (
@@ -19,8 +20,8 @@ const App: React.FC = () => {
         <Route path="/" element={
           <><NavBar /><HomePage /></>} />
           {/* <Route path="/" element={<Home />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/login" element={<Login />} /> */}
+          <Route path="/search" element={<Search />} /> */}
+          <Route path="/login" element={<><NavBar /><LoginPage /></>} />
         </Routes>
       </Router>
     </div>
