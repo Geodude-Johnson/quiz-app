@@ -3,7 +3,19 @@
     color: #FFFFFF
 } */
 
-.css-1vnt7b6 {
-    margin: 0;
-    justify-content: space-around;
+/*media queries not working, is the style sheet still connected?*/
+
+/*mobile devices */
+@media (max-width: 768px){
+.styled-fab{
+    position: relative;
+
+}
+.search-container{
+    position: relative;
+    left: 0;
+}
+.footer{
+    display: none;
+}
 }
