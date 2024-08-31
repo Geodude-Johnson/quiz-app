@@ -2,9 +2,12 @@ import * as React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { alpha, styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
+  top: 30,
+  left: 359,
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   '&:hover': {
@@ -12,10 +15,10 @@ const Search = styled('div')(({ theme }) => ({
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: '100%',
+  width: '50%',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(3),
-    width: 'auto',
+    
   },
 }));
 
@@ -49,7 +52,7 @@ return  (<Search>
   <SearchIcon />
 </SearchIconWrapper>
 <StyledInputBase
-  placeholder="Search…"
+  placeholder=" Search collections..."
   inputProps={{ 'aria-label': 'search' }}
 />
 </Search>
