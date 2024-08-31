@@ -14,7 +14,7 @@ const darkTheme = createTheme({
          primary: {
            main: '#008080', // Teal
            dark: '#006666',
-           light: '#66B2B2',
+           light: '#FFFFFF',
          },
          secondary: {
            main: '#ff4081', // Pink

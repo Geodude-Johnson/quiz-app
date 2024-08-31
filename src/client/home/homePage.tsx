@@ -1,5 +1,7 @@
 import * as React from 'react';
 import Footer from '../footer';
+import SearchContainer from './components/search';
+import CardCollections from './components/collections';
  import { styled } from '@mui/material/styles';
  import Button, { ButtonProps } from '@mui/material/Button';
  import Stack from '@mui/material/Stack';
@@ -12,13 +14,16 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
     backgroundColor: blue[600],
   },
   position: 'relative', // relative to the navBar
-  top: 50, // Adjust top position
+  top: 150, // Adjust top position
   left: 50, // Adjust left position
 }));
 
+
 function HomePage () {
   return (<>
-  <ColorButton variant="contained">MUI TEST BUTTON</ColorButton>
+  {/* <ColorButton variant="contained">MUI TEST BUTTON</ColorButton> */}
+  <SearchContainer />
+  <CardCollections />
   <Footer />
   </>);
 }

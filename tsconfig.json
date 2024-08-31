@@ -21,7 +21,7 @@
     "include": [
       "src/**/*",
       "test/**/*", 
-      "global.d.ts", "src/__tests__", "jest.setup.ts", "jest.config.js" ],
+      "global.d.ts", "src/__tests__", "jest.setup.ts", "jest.config.js", "globals.d.ts" ],
       "exclude": ["node_modules", "build"] // Exclude the build directory
   }
       /* Visit https://aka.ms/tsconfig to read more about this file */

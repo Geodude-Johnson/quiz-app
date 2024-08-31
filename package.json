@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "@babel/preset-env": "^7.25.4",
+    "@dnd-kit/core": "^6.1.0",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@fontsource/roboto": "^5.0.14",
@@ -55,6 +56,7 @@
     "mini-css-extract-plugin": "^2.9.1",
     "nodemon": "^3.1.4",
     "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",
     "workbox-webpack-plugin": "^7.1.0"
   }

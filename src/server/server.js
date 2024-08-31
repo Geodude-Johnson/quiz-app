@@ -25,7 +25,7 @@ app.use("/collections", require("./routes/collectionsRoutes"));
 app.use(
   "/",
   (req, res, next) => {
-    console.log("testing");
+    console.log("testing / route");
     next();
   },
   (req, res) => {
