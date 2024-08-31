@@ -158,7 +158,7 @@ export default function NavBar() {
             sx={{ mr: 2 }}
           >
             <MenuIcon /> {/** three horizontal line logo 
-           * should have the same functionality as the navbar
+           * should have the same functionality as the footer
           */}
           </IconButton>
           <Typography
