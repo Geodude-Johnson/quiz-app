@@ -52,8 +52,8 @@ const root = createRoot(container);
 
 root.render(
   <ThemeProvider theme={darkTheme}>
+    <CssBaseline />
     <GoogleOAuthProvider clientId='1007803784486-5flseicun88phk3lqoffrgmn3svj34ah.apps.googleusercontent.com'>
-     <CssBaseline />
      <App />
     </GoogleOAuthProvider>
   </ThemeProvider>
