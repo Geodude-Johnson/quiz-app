@@ -1,9 +1,10 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import Footer from '../footer';
- import { styled } from '@mui/material/styles';
- import Button, { ButtonProps } from '@mui/material/Button';
- import Stack from '@mui/material/Stack';
- import { blue } from '@mui/material/colors';
+import { styled } from '@mui/material/styles';
+import Button, { ButtonProps } from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import { blue } from '@mui/material/colors';
 
 const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
   color: theme.palette.getContrastText(blue[500]),
