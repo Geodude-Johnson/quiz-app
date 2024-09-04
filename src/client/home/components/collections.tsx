@@ -1,16 +1,16 @@
-import * as React from 'react';
-import { useState } from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import CardActionArea from '@mui/material/CardActionArea';
-import { styled } from '@mui/material/styles';
-import collectionLogo from '../../assets/collectionLogo.png';
-import UserDataset from './collectionData';
+import * as React from "react";
+import { useState } from "react";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import CardActionArea from "@mui/material/CardActionArea";
+import { styled } from "@mui/material/styles";
+import collectionLogo from "../../assets/collectionLogo.png";
+import UserDataset from "./collectionData";
 
-const StyledCollection = styled('div')(({ theme }) => ({
-  position: 'relative',
+const StyledCollection = styled("div")(({ theme }) => ({
+  position: "relative",
   top: 70,
   left: 359,
 }));
@@ -18,7 +18,11 @@ const StyledCollection = styled('div')(({ theme }) => ({
 function CardCollections() {
   const [showCollection, setShowCollection] = useState(false);
   const handleClick = () => {
-    setShowCollection(true);
+    if (showCollection) {
+      setShowCollection(false);
+    } else {
+      setShowCollection(true);
+    }
   };
   return (
     <div>
@@ -35,7 +39,7 @@ function CardCollections() {
               <Typography gutterBottom variant="h5" component="div">
                 User collection 1 name
               </Typography>
-              <Typography variant="body2" sx={{ color: 'primary.light' }}>
+              <Typography variant="body2" sx={{ color: "primary.light" }}>
                 User description of collection
               </Typography>
             </CardContent>
