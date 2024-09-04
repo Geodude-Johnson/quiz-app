@@ -2,3 +2,20 @@
     background-color: rgb(180, 190, 248);
     color: #FFFFFF
 } */
+
+/*media queries not working, is the style sheet still connected?*/
+
+/*mobile devices */
+@media (max-width: 768px){
+.styled-fab{
+    position: relative;
+
+}
+.search-container{
+    position: relative;
+    left: 0;
+}
+.footer{
+    display: none;
+}
+}
