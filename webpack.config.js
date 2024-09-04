@@ -28,7 +28,7 @@ const config = {
     },
     proxy: [
       {
-        context: ["/"],
+        context: ["/api"],
         target: "http://localhost:3000",
       },
     ],
