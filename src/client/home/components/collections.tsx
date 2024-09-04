@@ -1,11 +1,12 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import { styled } from '@mui/material/styles';
-
+import collectionLogo from '../../assets/collectionLogo.png';
 
 const StyledCollection = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -13,15 +14,25 @@ const StyledCollection = styled('div')(({ theme }) => ({
     left: 359,
   }));
 
+// const [showCollection, setShowCollection] = useState(false);
+
+const handleClick = () => {
+  // setShowCollection(true)
+  console.log('clicked!')
+}
+
+
 function CardCollections () {
   return (
+    // <div>
+      <div >
     <StyledCollection>
     <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea>
+      <CardActionArea onClick={handleClick}>
         <CardMedia
           component="img"
           height="140"
-          image="/client/assets/collectionLogo.png"
+          image={collectionLogo}
           alt="collection-logo"
         />
         <CardContent>
@@ -35,6 +46,7 @@ function CardCollections () {
       </CardActionArea>
     </Card>
     </StyledCollection>
+    </div>
   );
 }
 

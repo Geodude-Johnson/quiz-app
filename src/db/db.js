@@ -4,6 +4,8 @@ const express = require('express');
 const router = express();
 const mockData = require('../MOCK_DATA.json');
 var { ruruHTML } = require("ruru/server")
+require('dotenv').config();
+const postgres = require('postgres');
 
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
@@ -38,4 +40,22 @@ router.get("/db", (_req, res) => {
     res.type("html")
     res.end(ruruHTML({ endpoint: "/graphql" }))
 })
-module.exports = router;
+
+
+// require('dotenv').config();
+// const postgres = require('postgres');
+
+const connectionString = process.env.DATABASE_URL;
+const sql = postgres(connectionString);
+
+// supabase.from('answerSet')  // Use supabase.from for table selection
+//   .select('*')  // Select all columns
+//   .then((response) => {
+//     console.log('Connected to Supabase! Data:', response.data);
+//   })
+//   .catch((error) => {
+//     console.error('Error connecting to Supabase:', error);
+//   });
+
+// export default sql;
+module.exports = router , sql;
