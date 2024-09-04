@@ -2,7 +2,7 @@
 //https://testing-library.com/docs/example-react-router/
 import * as React from 'react';
 import { render } from '@testing-library/react';
-import CardCollections from '../components/collections';
+import CardCollections from '../components/collectionData';
 
 // describe('card collections should be showing if applicable', () => {
 //     it('shows at least one card collection if data exists', () => {
