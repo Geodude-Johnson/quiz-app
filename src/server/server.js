@@ -19,14 +19,14 @@ app.use(express.static(path.resolve(__dirname, "../../dist")));
 end point routes
 */
 
-app.use("/", db);
-app.use("/login", require("./routes/userRoutes"));
-app.use("/collections", require("./routes/collectionsRoutes"));
+app.use("/api/", db);
+app.use("/api/login", require("./routes/userRoutes"));
+app.use("/api/collections", require("./routes/collectionsRoutes"));
 // app.use("/search", require("./routes/searchRoutes"));
 // app.use("/home", require("./routes/loginRoutes"));
 
 app.use(
-  "/",
+  "/api/",
   (req, res, next) => {
     console.log("testing / route");
     next();
