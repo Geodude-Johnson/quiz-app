@@ -10,10 +10,11 @@ const collectionsController = {
       const { data, error } = await supabase.from("cards").select("*");
 
       if (error) {
+        console.log(error);
         throw error;
       }
 
-      // console.log("THIS IS OUR DATA --->", data);
+      console.log("THIS IS OUR DATA --->", data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
