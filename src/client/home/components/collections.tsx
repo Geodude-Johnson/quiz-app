@@ -7,48 +7,49 @@ import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import { styled } from '@mui/material/styles';
 import collectionLogo from '../../assets/collectionLogo.png';
+import UserDataset from './collectionData';
 
 const StyledCollection = styled('div')(({ theme }) => ({
-    position: 'relative',
-    top: 70,
-    left: 359,
-  }));
+  position: 'relative',
+  top: 70,
+  left: 359,
+}));
 
-// const [showCollection, setShowCollection] = useState(false);
-
-const handleClick = () => {
-  // setShowCollection(true)
-  console.log('clicked!')
-}
-
-
-function CardCollections () {
+function CardCollections() {
+  const [showCollection, setShowCollection] = useState(false);
+  const handleClick = () => {
+    setShowCollection(true);
+  };
   return (
-    // <div>
-      <div >
-    <StyledCollection>
-    <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea onClick={handleClick}>
-        <CardMedia
-          component="img"
-          height="140"
-          image={collectionLogo}
-          alt="collection-logo"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div" >
-            User collection 1 name
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'primary.light' }}>
-            User description of collection
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
-    </StyledCollection>
+    <div>
+      <StyledCollection>
+        <Card sx={{ maxWidth: 345 }}>
+          <CardActionArea onClick={handleClick}>
+            <CardMedia
+              component="img"
+              height="140"
+              image={collectionLogo}
+              alt="collection-logo"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                User collection 1 name
+              </Typography>
+              <Typography variant="body2" sx={{ color: 'primary.light' }}>
+                User description of collection
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </StyledCollection>
+      {showCollection && (
+        <div>
+          <p>Collection data</p>
+          <UserDataset />
+        </div>
+      )}
     </div>
   );
 }
-
 
 export default CardCollections;

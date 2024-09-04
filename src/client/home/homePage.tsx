@@ -2,7 +2,6 @@ import * as React from 'react';
 import Footer from '../footer';
 import SearchContainer from './components/search';
 import CardCollections from './components/collections';
-import UserDataset from './components/collectionData';
  import { styled } from '@mui/material/styles';
  import Button, { ButtonProps } from '@mui/material/Button';
  import Stack from '@mui/material/Stack';
@@ -25,7 +24,6 @@ function HomePage () {
   {/* <ColorButton variant="contained">MUI TEST BUTTON</ColorButton> */}
   <SearchContainer />
   <CardCollections />
-  <UserDataset />
   <Footer />
   </>);
 }
