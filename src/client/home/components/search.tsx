@@ -1,3 +1,7 @@
+/*
+* need to add dymanic functionality so we can search through the collections, function skeleton
+set up to console log 'searched when you press enter' */
+
 import * as React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { alpha, styled } from '@mui/material/styles';
@@ -46,15 +50,25 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchContainer () {
-return  (<Search>
+const handleSearch = () => {
+  console.log('searched!')
+}
+
+const SearchContainer = () => {
+return  (
+<div>
+  <Search className="search-container">
 <SearchIconWrapper>
   <SearchIcon />
+  
 </SearchIconWrapper>
 <StyledInputBase
-  placeholder=" Search collections..."
+  placeholder=" Search and press enter..."
   inputProps={{ 'aria-label': 'search' }}
+  onMouseLeave={handleSearch}
 />
 </Search>
-
+</div>
 )}
+
+export default SearchContainer;
