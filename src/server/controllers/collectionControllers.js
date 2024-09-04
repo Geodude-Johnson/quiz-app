@@ -2,7 +2,6 @@ const supabase = require('../../db/supabaseClient');
 
 const collectionsController = {
   getCollectionByUser: async (req, res, next) => {
-    console.log("triggered getCollectionByUser");
     try {
       // Using the Supabase query builder
       const { data, error } = await supabase
