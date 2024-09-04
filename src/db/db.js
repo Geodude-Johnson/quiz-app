@@ -41,21 +41,4 @@ router.get("/db", (_req, res) => {
     res.end(ruruHTML({ endpoint: "/graphql" }))
 })
 
-
-// require('dotenv').config();
-// const postgres = require('postgres');
-
-const connectionString = process.env.DATABASE_URL;
-const sql = postgres(connectionString);
-
-// supabase.from('answerSet')  // Use supabase.from for table selection
-//   .select('*')  // Select all columns
-//   .then((response) => {
-//     console.log('Connected to Supabase! Data:', response.data);
-//   })
-//   .catch((error) => {
-//     console.error('Error connecting to Supabase:', error);
-//   });
-
-// export default sql;
-module.exports = router , sql;
+module.exports = router;

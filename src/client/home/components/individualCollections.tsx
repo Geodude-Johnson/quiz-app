@@ -1,4 +1,6 @@
 //may need to pass state down from card collections to individual collections to get this to work properly
+
+//try using react router instead of conditional rendering to get back to the collection page / endpoint
 import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
