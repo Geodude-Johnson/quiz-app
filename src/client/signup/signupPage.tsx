@@ -16,7 +16,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 
-function LoginPage() {
+function SignupPage() {
   const navigate = useNavigate();
 
   const [ email, setEmail ] = useState('');
@@ -160,7 +160,7 @@ function LoginPage() {
             variant="h4"
             sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
           >
-            Sign in
+            Sign up
           </Typography>
           <Box
             component="form"
@@ -173,6 +173,23 @@ function LoginPage() {
               gap: 2,
             }}
           >
+            <FormControl>
+              <FormLabel htmlFor="name">Name</FormLabel>
+              <TextField
+                error={credentialError}
+                id="name"
+                type="name"
+                name="name"
+                placeholder="John Smith"
+                autoComplete="name"
+                autoFocus
+                required
+                fullWidth
+                variant="outlined"
+                color={credentialError ? 'error' : 'primary'}
+                sx={{ ariaLabel: 'name' }}
+              />
+            </FormControl>
             <FormControl>
               <FormLabel htmlFor="email">Email</FormLabel>
               <TextField
@@ -221,23 +238,23 @@ function LoginPage() {
               onClick={handleLogin}
               sx={{marginTop: '15px'}}
             >
-              Sign in
+              Sign up
             </Button>
             <Typography sx={{ textAlign: 'center' }}>
-              Don&apos;t have an account?{' '}
+              Already have an account?{' '}
               <span>
                 <Link
-                  href="/signup"
+                  href="/login"
                   sx={{ alignSelf: 'center' }}
                 >
-                  Sign up
+                  Sign in
                 </Link>
               </span>
             </Typography>
           </Box>
           <Divider>or</Divider>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, alignItems: 'center'}}>
-            <GoogleLogin onSuccess={responseMessage} onError={errorMesssage} width='225px'/>
+            <GoogleLogin onSuccess={responseMessage} onError={errorMesssage} width='225px' text='signup_with'/>
           </Box>
         </Card>
       </SignInContainer>
@@ -245,4 +262,4 @@ function LoginPage() {
   )
 };
 
-export default LoginPage;
+export default SignupPage;

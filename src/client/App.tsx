@@ -9,6 +9,7 @@ import HomePage from './home/homePage';
 import NavBar from './navBar';
 import * as React from 'react';
 import LoginPage from './login/loginPage';
+import SignupPage from './signup/signupPage';
 
 const App: React.FC = () => {
   return (
@@ -21,7 +22,8 @@ const App: React.FC = () => {
           <><NavBar /><HomePage /></>} />
           {/* <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} /> */}
-          <Route path="/login" element={<><NavBar /><LoginPage /></>} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
         </Routes>
       </Router>
     </div>
