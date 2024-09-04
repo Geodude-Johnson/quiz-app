@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 // const cookieParser = require("cookie-parser");
 const db = require('../db/db.js')
+const collectionController = require("./controllers/collectionControllers.js")
 
 
 const PORT = 3000;
@@ -20,8 +21,10 @@ end point routes
 */
 
 app.use("/", db);
-app.use("/login", require("./routes/userRoutes"));
-app.use("/collections", require("./routes/collectionsRoutes"));
+app.get("/collectionTest", collectionController.getCollectionByUser)
+// app.post("/GraphQLtest", checkingDB)
+// app.use("/login", require("./routes/userRoutes"));
+// app.use("/collections", require("./routes/collectionsRoutes"));
 // app.use("/search", require("./routes/searchRoutes"));
 // app.use("/home", require("./routes/loginRoutes"));
 
