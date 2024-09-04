@@ -10,7 +10,7 @@ import NavBar from './navBar';
 import * as React from 'react';
 import LoginPage from './login/loginPage';
 import SignupPage from './signup/signupPage';
-
+import IndividualCollections from './home/components/individualCollections';
 const App: React.FC = () => {
   return (
     <div>
@@ -20,6 +20,7 @@ const App: React.FC = () => {
         {/* <button>Button</button> */}
         <Route path="/" element={
           <><NavBar /><HomePage /></>} />
+          <Route path="/collections" element={<IndividualCollections />} />
           {/* <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} /> */}
           <Route path="/login" element={<LoginPage />} />

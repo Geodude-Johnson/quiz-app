@@ -11,6 +11,7 @@ import { styled } from '@mui/material/styles';
 import collectionLogo from '../../assets/collectionLogo.png';
 import UserDataset from "./collectionData";
 import CardCollections from "./cardCollections";
+import { useNavigate } from 'react-router-dom';
 
 const StyledCollection = styled("div")(({ theme }) => ({
     position: "relative",
@@ -19,10 +20,12 @@ const StyledCollection = styled("div")(({ theme }) => ({
 }));
 
 function IndividualCollections() {
-  const [showCollection, setShowCollection] = useState(true);
+  const [showIndivCollection, setShowCollection] = useState(true);
+  const navigate = useNavigate();
   const handleClick = () => {
-    if (showCollection) {
+    if (showIndivCollection) {
       setShowCollection(false);
+      navigate('/collections')
     } else {
       setShowCollection(true);
     }
@@ -30,18 +33,19 @@ function IndividualCollections() {
 
   const goBack = () => {
     setShowCollection(false); // Set showCollection to false to hide individual collections
+    navigate('/');
   };
+
 
   return (
     <div>
-        {showCollection ? (
+        {showIndivCollection ? (
           <div>
             <p>Collection data</p>
             <UserDataset />
             <button onClick={goBack}>back</button>
           </div>
-        ) : (<p>test</p>
-        )}
+        ): <CardCollections />}
     </div>
   );
 }
