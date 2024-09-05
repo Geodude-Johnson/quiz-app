@@ -8,6 +8,8 @@ this one I will leave like this for now
 how will we determine if we are searching or a user or a collection via the same search bar?
 */
 
-router.get("/:id", searchUser);
+router.get("/:id", searchUser, (req, res) => {
+  
+});
 
 module.exports = router;

@@ -14,12 +14,26 @@ const {
 /* ==========> following routes for CRUD for collections <==========*/
 /* ==========> These routes will probably need to be protected <====*/
 
-router.post("/", addCollection);
+router.post("/", addCollection, (req, res) => {
+  
+});
 // needs to have a card id in the body
-router.patch("/:id", updateCollection);
-router.get("/:user", getCollectionByUser);
-router.get("/:user/:id", getCollectionById);
-router.delete("/:id", deleteCollection);
-router.delete("/:collectionId/:cardId", deleteCard);
-router.post("/:collectionId/:cardId", addCard);
+router.patch("/:id", updateCollection, (req, res) => {
+  
+});
+router.get("/:user", getCollectionByUser, (req, res) => {
+  
+});
+router.get("/:user/:id", getCollectionById, (req, res) => {
+  
+});
+router.delete("/:id", deleteCollection, (req, res) => {
+  
+});
+router.delete("/:collectionId/:cardId", deleteCard, (req, res) => {
+  
+});
+router.post("/:collectionId/:cardId", addCard, (req, res) => {
+  
+});
 module.exports = router;

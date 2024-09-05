@@ -11,9 +11,15 @@ const {
 
 // need to have aunthentication middleware
 // register a new user => username and password in the body?
-router.post("/", registerUser);
+router.post("/", registerUser, (req, res) => {
+  
+});
 // in the case of a user signing in => what happend if user has token?
-router.get("/login/:username/:password", userProfile);
+router.get("/login/:username/:password", userProfile, (req, res) => {
+  
+});
 // do we need another route for a signed in user? No, we have to protect those routes on the front end right?
-router.delete("/:id", deleteUser);
+router.delete("/:id", deleteUser, (req, res) => {
+  
+});
 module.exports = router;
