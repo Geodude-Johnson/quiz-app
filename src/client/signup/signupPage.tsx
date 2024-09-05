@@ -98,6 +98,7 @@ function SignupPage() {
       if(response.status === 200) {
         navigate('/');
       } else {
+        // setCredentialError(true);
         setInvalid(true);
       }
     } catch (error) {
@@ -246,7 +247,7 @@ function SignupPage() {
                 <FormLabel htmlFor="password">Password</FormLabel>
               </Box>
               <TextField
-                error={credentialError}
+                // error={credentialError}
                 name="password"
                 placeholder="••••••"
                 type='password'
@@ -256,7 +257,7 @@ function SignupPage() {
                 required
                 fullWidth
                 variant="outlined"
-                color={credentialError ? 'error' : 'primary'}
+                // color={credentialError ? 'error' : 'primary'}
                 slotProps={{
                   input: {
                     endAdornment: 
