@@ -3,7 +3,9 @@
     color: #FFFFFF
 } */
 
-/*media queries not working, is the style sheet still connected?*/
+/*
+
+https://mui.com/material-ui/react-use-media-query/*/
 
 /*mobile devices */
 @media (max-width: 768px){

@@ -1,5 +1,5 @@
 //may need to pass state down from card collections to individual collections to get this to work properly
-// /collections route shows the individual info and is incorrect currently
+// /collections route shows the individual info and needs to dynamically render the user's collections
 //try using react router instead of conditional rendering to get back to the collection page / endpoint
 import React, { useState } from 'react';
 import Card from '@mui/material/Card';
@@ -8,7 +8,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import { styled } from '@mui/material/styles';
-import collectionLogo from '../../assets/collectionLogo.png';
 import UserDataset from "./collectionData";
 import CardCollections from "./cardCollections";
 import { useNavigate } from 'react-router-dom';
@@ -40,11 +39,11 @@ function IndividualCollections() {
   return (
     <div>
         {showIndivCollection ? (
-          <div>
+          <StyledCollection>
             <p>Collection data</p>
             <UserDataset />
             <button onClick={goBack}>back</button>
-          </div>
+          </StyledCollection>
         ): <CardCollections />}
     </div>
   );
