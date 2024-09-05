@@ -5,6 +5,8 @@ const express = require('express');
 const router = express();
 const mockData = require('../MOCK_DATA.json');
 var { ruruHTML } = require("ruru/server")
+require('dotenv').config();
+const postgres = require('postgres');
 
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
@@ -39,4 +41,5 @@ router.get("/db", (_req, res) => {
     res.type("html")
     res.end(ruruHTML({ endpoint: "/graphql" }))
 })
+
 module.exports = router;

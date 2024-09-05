@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import Footer from '../footer';
 import SearchContainer from './components/search';
-import CardCollections from './components/collections';
+import CardCollections from './components/cardCollections';
  import { styled } from '@mui/material/styles';
  import Button, { ButtonProps } from '@mui/material/Button';
  import Stack from '@mui/material/Stack';

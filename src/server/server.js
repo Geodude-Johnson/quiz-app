@@ -3,7 +3,7 @@ const app = express();
 const path = require("path");
 // const cookieParser = require("cookie-parser");
 const db = require('../db/db.js')
-const collectionController = require("./controllers/collectionControllers.js")
+require('dotenv').config(); const collectionController = require("./controllers/collectionControllers.js")
 
 
 const PORT = 3000;
