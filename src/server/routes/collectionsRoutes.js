@@ -4,29 +4,29 @@ const express = require("express");
 const router = express.Router();
 const {
   getCollectionByUser,
-  // getCollectionById,
-  // addCollection,
+  getCardsById,
+  addCollection,
   // deleteCollection,
   // updateCollection,
   // deleteCard,
-  // addCard,
+  addCard,
 } = require("../controllers/collectionControllers");
 /* ==========> following routes for CRUD for collections <==========*/
 /* ==========> These routes will probably need to be protected <====*/
 
-// router.post("/", addCollection);
+router.post("/:id", addCollection); // => need the user Id of the collection!
 
 // needs to have a card id in the body
 // router.patch("/:id", updateCollection);
 
-router.get("/:user", getCollectionByUser);
+router.get("/:userId", getCollectionByUser);
 
-// router.get("/:user/:id", getCollectionById);
+router.get("/cards/:collectionId", getCardsById);
 
 // router.delete("/:id", deleteCollection);
 
 // router.delete("/:collectionId/:cardId", deleteCard);
 
-// router.post("/:collectionId/:cardId", addCard);
+router.post("/card/:collectionId", addCard);
 
 module.exports = router;

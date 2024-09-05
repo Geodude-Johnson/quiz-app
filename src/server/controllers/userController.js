@@ -49,6 +49,7 @@ const userController = {
     try {
       const { error } = await supabase.from("user").delete().eq("id", id);
       if (error) console.log(error);
+      else console.log(`deleted user with and id of: ${id} successful`);
     } catch (err) {
       next({
         log: `Express error handler error in userController.userProfile middleware: ${err}`,
