@@ -3,7 +3,9 @@ const app = express();
 const path = require("path");
 // const cookieParser = require("cookie-parser");
 const db = require("../db/db.js");
-const collectionController = require("./controllers/collectionControllers.js");
+const collectionRouter = require("../server/routes/collectionsRoutes.js");
+
+require("dotenv").config();
 
 const PORT = 3000;
 
@@ -23,7 +25,7 @@ app.use("/api/", db);
 // app.get("/api/collectionTest", collectionController.getCollectionByUser);
 // app.post("/GraphQLtest", checkingDB)
 app.use("/api/login", require("./routes/userRoutes"));
-app.use("/api/collections", require("./routes/collectionsRoutes"));
+// app.use("/api/collections", require("./routes/collectionsRoutes"));
 // app.use("/search", require("./routes/searchRoutes"));
 // app.use("/home", require("./routes/loginRoutes"));
 
