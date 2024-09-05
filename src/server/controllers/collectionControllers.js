@@ -3,8 +3,6 @@ const supabase = require("../../db/supabaseClient");
 const collectionsController = {
   getCollectionByUser: async (req, res, next) => {
     userId = req.params;
-    console.log("user on params", userId);
-    console.log("triggered getCollectionByUser");
     try {
       // Using the Supabase query builder
       const { data, error } = await supabase.from("cards").select("*");
@@ -23,27 +21,14 @@ const collectionsController = {
   addCollection: async (req, res, next) => {
     const { id } = req.params;
     const { name } = req.body;
-    console.log("id => ", id, "name => ", name);
-    console.log("triggered addCollection");
-    // I want to create a collection and then add that id to a user's colleciton array
     try {
       const { data, error } = await supabase
         .from("collections")
-        .insert([{ label: name }])
+        .insert([{ name, userId: id }])
         .select();
-
-      console.log(data);
-      const newCollectionId = data[0].id;
-
-      const { data: userData, error: userError } = await supabase
-        .from("user")
-        .update({
-          collections: supabase.supabase.fn.array_append("collections", [
-            ...collections,
-            newCollectionId,
-          ]),
-        })
-        .eq("id", id);
+      error
+        ? console.log("error when trying to add collection, ", error)
+        : console.log(`successfully added ${name} to db`);
     } catch (err) {
       next({
         log: `Express error handler error in collectionController.addCollection middleware: ${err}`,
@@ -63,12 +48,50 @@ const collectionsController = {
     console.log("triggered deleteCollection");
     res.sendStatus(200);
   },
-  getCollectionById: (req, res, next) => {
-    console.log("triggered getCollectionById");
-    res.sendStatus(200);
+  // this is pointless!
+  getCardsById: async (req, res, next) => {
+    const { collectionsId } = req.params;
+    console.log("triggered getCardsById ", collectionsId);
+    try {
+      const { data: cardsArray, error } = await supabase
+        .from("cards")
+        .select("*")
+        .eq("collection_id", collectionsId);
+
+      error
+        ? console.log(`error when trying to fetch cards by user id `, error)
+        : res.status(200).json(cardsArray);
+    } catch (err) {
+      next({
+        log: `Express error handler error in collectionController.getCardById middleware: ${err}`,
+        status: 500,
+        message: {
+          err: "An error occurred in collectionController.getCardById",
+        },
+      });
+    }
   },
-  addCard: (req, res, next) => {
+  addCard: async (req, res, next) => {
     console.log("triggered addCard");
+    const { collectionId } = req.params;
+    const { question, answer, category } = req.body;
+    try {
+      const { data, error } = await supabase
+        .from("cards")
+        .insert([{ question, answer, category, collection_id: collectionId }])
+        .select();
+      error
+        ? console.log("error when trying to add card, ", error)
+        : console.log(`successfully added ${question} to db`);
+    } catch (err) {
+      next({
+        log: `Express error handler error in collectionController.addCard middleware: ${err}`,
+        status: 500,
+        message: {
+          err: "An error occurred in collectionController.addCard",
+        },
+      });
+    }
     res.sendStatus(200);
   },
   deleteCard: (req, res, next) => {
