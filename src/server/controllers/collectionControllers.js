@@ -98,7 +98,7 @@ const collectionsController = {
   },
   // this is pointless!
   getCardsById: async (req, res, next) => {
-    const { collectionsId } = req.params;
+    const { collectionId } = req.params;
     console.log("triggered getCardsById ", collectionsId);
     try {
       const { data: cardsArray, error } = await supabase
