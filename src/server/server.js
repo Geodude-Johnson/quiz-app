@@ -2,8 +2,8 @@ const express = require("express");
 const app = express();
 const path = require("path");
 // const cookieParser = require("cookie-parser");
-const db = require('../db/db.js')
-require('dotenv').config(); 
+const db = require("../db/db.js");
+const collectionController = require("./controllers/collectionControllers.js");
 
 const PORT = 3000;
 
@@ -20,6 +20,8 @@ end point routes
 */
 
 app.use("/api/", db);
+app.get("/api/collectionTest", collectionController.getCollectionByUser);
+// app.post("/GraphQLtest", checkingDB)
 app.use("/api/login", require("./routes/userRoutes"));
 app.use("/api/collections", require("./routes/collectionsRoutes"));
 // app.use("/search", require("./routes/searchRoutes"));
@@ -59,10 +61,19 @@ app.use((err, req, res, next) => {
     status: 500,
     message: { err: "An error occurred" },
   };
-  defaultErr.log = err.log;
-  defaultErr.message = err.message;
-  const errorObj = Object.assign({}, defaultErr);
-  console.log("in global error handler");
+  const errorObj = {
+    ...defaultErr,
+    status: err.status || defaultErr.status,
+    message: err.message ? { err: err.message } : defaultErr.message,
+    log: err.log || defaultErr.log,
+  };
+  console.error(`
+    Error: ${errorObj.log}
+    Status: ${errorObj.status}
+    Path: ${req.path}
+    Stack: ${err.stack || "No stack trace available"}
+  `);
+  res.status(errorObj.status).json(errorObj.message);
 });
 
 app.listen(PORT, () => {
