@@ -3,21 +3,18 @@ COLLECTIONS ROUTES:
 * All collections associated with user (name of collections)
     route: GET to /collections/:user 
     shape of data response: 
-* All cards in a specific collection 
-    route: GET to /collections/:user/:id
+*** All cards in a specific collection 
+    route: GET to /collections/cards/:collectionId
     shape of data response: 
 * Initalize a colloection: 
     route: POST to /collections
-    shape of data request: 
-* Update a collection with a speciic card 
-    route PATCH to collections/:id (the id of the card we are updating could be in the body)
     shape of data request: 
 * Delete an entire collection 
     route: Delete collections/:id
 * Delete a card
     route: DELETE collections/:collectionId/:cardId
-* add a card 
-    route: POST collections/:collectionId/:cardId
+*** add a card 
+    route: POST collections/card/:collectionId
 
 USER ROUTES:
 
