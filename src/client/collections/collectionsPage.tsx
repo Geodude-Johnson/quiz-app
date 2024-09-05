@@ -1,3 +1,5 @@
+//at some point i want to move this colorbutton to be an option when the left three horizontal tabs are clicked in the nav bar
+//collections should also be an option within there ^^^
 import * as React from 'react';
 import { useEffect } from 'react';
 import Footer from '../footer';
@@ -7,6 +9,7 @@ import CardCollections from './components/cardCollections';
  import Button, { ButtonProps } from '@mui/material/Button';
  import Stack from '@mui/material/Stack';
  import { blue } from '@mui/material/colors';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -23,12 +26,13 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
 }));
 
 
-
-
-
 function HomePage () {
+  const navigate = useNavigate();
+  const handleReviewClick = () => {
+    navigate('/review');
+  }
   return (<>
-  {/* <ColorButton variant="contained">MUI TEST BUTTON</ColorButton> */}
+  <ColorButton variant="contained" onClick={handleReviewClick}>REVIEW QUESTIONS</ColorButton>
   <SearchContainer />
   <CardCollections />
   <Footer />
