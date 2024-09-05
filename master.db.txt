@@ -1,0 +1,95 @@
+Question                                                                        
+1.
+True or False: 
+a stack datastructure is represented with a last in,first out approach              
+* 
+True
+
+2. 
+Big O notation describes the relationship between the size of an input and what?    
+* 
+the computational steps it takes for the algorithm to complete
+
+3.
+What is time complexity?
+*
+measure of how the running time of an algorithm scales with the input size (rate of growth)
+
+4. 
+What is space complexity?
+*
+measure of how much additional memory is required by an algorithm beyond the space occupied by the input data itself.
+
+5.
+What is JavaScript & Is it static or dynamically typed?
+*
+programming language, & dynamic
+
+6. 
+What is TypeScript & Is it static or dynamically typed?
+* 
+programming language & static
+
+7.
+What does the DOM stand for? & What is the structure of the DOM?
+*
+Document Object Model, tree 
+
+8.
+What is jQuery?
+* 
+JavaScript library that abstracts and simplifies common DOM manipulation tasks into a quick and easy workflow
+
+9.
+What is React? & What's a benefit to using it?
+
+
+10.
+MVC design pattern & What's a benefit to using it?
+Model,View,Controller separates app logic 
+
+
+11.
+What is a relational database?
+
+12.
+What is a non-relational database?
+
+13.
+What is express? & What's a benefit to using it?
+
+14. 
+What is webpack? & What's a benefit to using it?
+
+15.
+What is a cache, how does it work? & What's a benefit to using one?
+
+16.
+What is the benefit of designing scalable applications and how do you do it?
+
+17.
+What are the differences between SQL and NoSQL databases?
+* 
+
+18.
+What is a RESTful API? & What is a benefit to using it?
+
+19.
+Describe the concept of a binary search algorithm and its time complexity.
+
+20.
+What are the main differences between HTTP and HTTPS?
+
+21.
+Explain the concept of a linked list and its advantage over an array.
+
+22.
+What is the purpose of a code review in testing?
+
+23.
+What is the role of a load-balancing system of architecture?
+
+
+24.
+
+25.

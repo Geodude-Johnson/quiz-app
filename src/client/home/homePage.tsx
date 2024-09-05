@@ -1,11 +1,15 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import Footer from '../footer';
 import SearchContainer from './components/search';
-import CardCollections from './components/collections';
+import CardCollections from './components/cardCollections';
  import { styled } from '@mui/material/styles';
  import Button, { ButtonProps } from '@mui/material/Button';
  import Stack from '@mui/material/Stack';
  import { blue } from '@mui/material/colors';
+
+
+
 
 const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
   color: theme.palette.getContrastText(blue[500]),
@@ -17,6 +21,9 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
   top: 150, // Adjust top position
   left: 50, // Adjust left position
 }));
+
+
+
 
 
 function HomePage () {

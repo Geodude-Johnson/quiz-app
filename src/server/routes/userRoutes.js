@@ -15,7 +15,7 @@ router.post("/", registerUser, (req, res) => {
   
 });
 // in the case of a user signing in => what happend if user has token?
-router.get("/login/:username/:password", userProfile, (req, res) => {
+router.get("/:id", userProfile, (req, res) => {
   
 });
 // do we need another route for a signed in user? No, we have to protect those routes on the front end right?
