@@ -5,12 +5,12 @@ import {
   Navigate,
 } from 'react-router-dom';
 import './assets/styles.css';
-import HomePage from './home/homePage';
+import HomePage from './collections/collectionsPage';
 import NavBar from './navBar';
 import * as React from 'react';
 import LoginPage from './login/loginPage';
 import SignupPage from './signup/signupPage';
-import IndividualCollections from './home/components/individualCollections';
+import IndividualCollections from './collections/components/individualCollections';
 const App: React.FC = () => {
   return (
     <div>
