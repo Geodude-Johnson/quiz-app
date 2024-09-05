@@ -2,10 +2,10 @@ const express = require("express");
 const app = express();
 const path = require("path");
 // const cookieParser = require("cookie-parser");
-const db = require('../db/db.js')
-const collectionRouter = require('../server/routes/collectionsRoutes.js')
+const db = require("../db/db.js");
+const collectionRouter = require("../server/routes/collectionsRoutes.js");
 
-require('dotenv').config(); 
+require("dotenv").config();
 
 const PORT = 3000;
 
@@ -22,7 +22,7 @@ end point routes
 */
 
 app.use("/api/", db);
-app.use("/api/collections", collectionRouter);
+// app.get("/api/collectionTest", collectionController.getCollectionByUser);
 // app.post("/GraphQLtest", checkingDB)
 app.use("/api/login", require("./routes/userRoutes"));
 // app.use("/api/collections", require("./routes/collectionsRoutes"));
