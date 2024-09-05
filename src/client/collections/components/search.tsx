@@ -1,7 +1,8 @@
 /*
 * need to add dymanic functionality so we can search through the collections, function skeleton
-set up to console log 'searched' 
+set up to console log 'searched'
 this is working when the mouse leaves the block , not any other times */
+
 import * as React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { alpha, styled } from '@mui/material/styles';
