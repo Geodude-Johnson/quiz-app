@@ -97,6 +97,7 @@ const collectionsController = {
   getCardsById: async (req, res, next) => {
     const { collectionId } = req.params;
     console.log("triggered getCardsById ", collectionId);
+    console.log("triggered getCardsById ", collectionId);
     try {
       const { data: cardsArray, error } = await supabase.from("cards")
         .select("*")
@@ -118,7 +119,8 @@ const collectionsController = {
   addCard: async (req, res, next) => {
     console.log("triggered addCard");
     const { collectionId } = req.params;
-    const { question, answer, category } = req.body;
+    let { question, answer, category } = req.body;
+    category = category.toLowerCase();
     try {
       const { data, error } = await supabase.from("cards")
         .insert([{ question, answer, category, collection_id: collectionId }])

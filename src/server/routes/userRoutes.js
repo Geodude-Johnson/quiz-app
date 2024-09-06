@@ -4,6 +4,7 @@ const {
   registerUser,
   userProfile,
   deleteUser,
+  loginUser,
 } = require("../controllers/userController.js");
 
 /* ==========> following routes for GET user profiles using AUTH and POST for adding a user <==========*/
@@ -11,9 +12,15 @@ const {
 
 // need to have aunthentication middleware
 // register a new user => username and password in the body?
-router.post("/", registerUser);
+router.post("/register", registerUser);
+
+// login
+router.post("/login", loginUser);
+
 // in the case of a user signing in => what happend if user has token?
-router.get("/:id", userProfile);
+router.get("/:username", userProfile);
+
 // do we need another route for a signed in user? No, we have to protect those routes on the front end right?
 router.delete("/:id", deleteUser);
+
 module.exports = router;
