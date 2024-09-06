@@ -4,6 +4,8 @@ onyl appear if the collection exists
 based off user input
 
 *addCard button not working
+
+*showcards should map through database collections and show all that are applicable
 */
 import * as React from 'react';
 import Card from '@mui/material/Card';
@@ -45,7 +47,7 @@ const handleAddCard = (e: any) => {
 }
 
 /**Add a card button */
-function AddCard () {
+const AddCard = () => {
   return (
     <div>
       <AddIcon onClick={handleAddCard}/>
@@ -53,7 +55,7 @@ function AddCard () {
   )
   }
   
-function CardCollections() {
+const CardCollections = () => {
   const [showCard, setShowCard] = useState(true); // Track card visibility
   const [showIndividualCollections, setShowIndividualCollections] = useState(false); // Track individual collections visibility
 
