@@ -23,26 +23,6 @@ function LoginPage() {
   const [ password, setPassword ] = useState('');
   const [ invalid, setInvalid] = useState(false);
 
-  const auth = async () => {
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
-      if(response.status === 200) {
-        navigate('/home');
-      } else {
-        setInvalid(true);
-      }
-    } catch (error) {
-      console.log("Error with Authentication:", error);
-    }
-  }
-
   function handlePasswordVisibility() {
     const passwordEl = document.getElementById('password');
     const passwordImageEl = document.getElementById('passwordImage');
@@ -84,6 +64,7 @@ function LoginPage() {
       console.log('userCredential: ', userCredential);
       setUser(userCredential)
       const { name, email } = userCredential;
+      navigate('/')
     }
   }
 
