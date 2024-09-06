@@ -13,25 +13,28 @@ import { useNavigate } from 'react-router-dom';
 const StyledDecisionSection = styled('div')(({ theme }) => ({
     position: "relative",
     top: 70,
-    left: 359,
+    left: 159,
     border: 'dashed white 7px',
     borderRadius: '50%',
     width: 'max-content',
     height: 'max-content',
     padding: 50,
     fontSize: 40,
+    backgroundColor: '#008080',
 }));
 
 export const CollectionOptions = styled(Button)(({ theme }) => ({
     position: "relative",
-    top: 120,
-    left: 359,
+    top: 220,
+    left: 159,
     borderRadius: '25%',
     width: 'max-content',
     height: 'max-content',
-    padding: 100,
+    padding: 60,
     margin: 10,
     fontSize: 25,
+    backgroundColor: '#ff4081',
+    color: 'white',
 }))
   
 const DNDReview = () => {
@@ -57,7 +60,7 @@ const DNDReview = () => {
     All Questions
     </CollectionOptions>
     <CollectionOptions onClick={handleReviewSome}>
-    Some Questions(Coming Soon....)
+    (Coming Soon....)
     </CollectionOptions>
     
     {/* <DndContext>
