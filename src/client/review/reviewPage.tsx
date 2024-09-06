@@ -51,13 +51,13 @@ const DNDReview = () => {
     <div>What collection would you like to review?</div>
     </StyledDecisionSection>
     <CollectionOptions onClick={handleReviewBack}>
-    Back
+    Go Back
     </CollectionOptions>
     <CollectionOptions onClick={handleReviewAll}>
-    All
+    All Questions
     </CollectionOptions>
     <CollectionOptions onClick={handleReviewSome}>
-    Some (Coming Soon....)
+    Some Questions(Coming Soon....)
     </CollectionOptions>
     
     {/* <DndContext>
