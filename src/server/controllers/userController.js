@@ -11,10 +11,12 @@ const userController = {
         .insert([{ username, password }]);
       if (error) {
         console.log("an error occucred when inserting new user, ", error);
-        return res.status(401).send('Username already exists')
+        return res.status(401).send("Username already exists");
       } else {
         console.log(`added username: ${username} to DB successful`);
-        return res.status(200).send('Your account has been successfully created')
+        return res
+          .status(200)
+          .send("Your account has been successfully created");
       }
     } catch (err) {
       next({
@@ -25,13 +27,13 @@ const userController = {
     }
   },
   userProfile: async (req, res, next) => {
-    const { id } = req.params;
-    // console.log("triggered userProfile");
+    const { username } = req.params;
+    console.log("triggered userProfile", username);
     try {
       const { data, error } = await supabase
         .from("user")
         .select("*")
-        .eq("id", id);
+        .eq("username", username);
       if (error) console.log(error);
       else console.log("return ", data);
     } catch (err) {
@@ -69,11 +71,10 @@ const userController = {
         .eq("username", username);
       if (error) console.log(error);
       else {
-        if(data[0]) {
+        if (data[0]) {
           console.log("data: ", data);
-
         } else {
-          return res.status(401).send('Username not found');
+          return res.status(401).send("Username not found");
         }
       }
     } catch (err) {
