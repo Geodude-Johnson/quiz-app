@@ -30,7 +30,7 @@ const userController = {
     }
   },
   registerUser: async (req, res, next) => {
-    // console.log("triggered registerUser");
+    console.log("triggered registerUser");
     if (!res.locals.userExists) {
       const { username, password } = req.body;
       console.log(req.body);
@@ -43,6 +43,7 @@ const userController = {
           .insert({ username, password: hashedPassword })
           .select();
         console.log("data: ", data);
+        res.locals.user = data;
         if (error) {
           next(error);
         }
@@ -109,6 +110,7 @@ const userController = {
             data[0].password
           );
           if (isCorrectPassword) {
+            res.locals.user = data[0];
             res.locals.authenticated = true;
           }
         }
@@ -120,6 +122,7 @@ const userController = {
         message: { err: "An error occurred in userController.userProfile" },
       });
     }
+
     return next();
   },
 };

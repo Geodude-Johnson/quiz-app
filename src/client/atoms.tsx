@@ -1,17 +1,13 @@
 import { atom } from "jotai";
 
 export interface UserType {
-  id: null | number;
-  created_at: string;
+  id: number | null;
   username: string;
-  password: string;
 }
 
-const user = atom({
+const userAtom = atom<UserType>({
   id: null,
-  created_at: "",
   username: "",
-  password: "",
 });
 
-export { user };
+export { userAtom };

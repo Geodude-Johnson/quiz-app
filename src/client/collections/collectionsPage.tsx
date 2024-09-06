@@ -10,9 +10,6 @@ import Button, { ButtonProps } from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { blue } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
-import { PrimitiveAtom, useAtom } from "jotai";
-
-import { user, UserType } from "../atoms";
 
 const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
   color: theme.palette.getContrastText(blue[500]),
@@ -25,7 +22,6 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
 }));
 
 function HomePage() {
-  const [userData] = useAtom(user);
   const navigate = useNavigate();
   const handleReviewClick = () => {
     navigate("/review");
@@ -33,7 +29,7 @@ function HomePage() {
   return (
     <>
       <ColorButton variant="contained" onClick={handleReviewClick}>
-        REVIEW QUESTIONS {userData.username}
+        REVIEW QUESTIONS
       </ColorButton>
       <SearchContainer />
       <CardCollections />

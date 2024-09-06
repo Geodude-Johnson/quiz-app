@@ -7,6 +7,8 @@ import {
 } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import NavBar from "../navBar";
+import { userAtom, UserType } from "../atoms";
+import { useSetAtom, useAtomValue } from "jotai";
 
 import MuiCard from "@mui/material/Card";
 import Box from "@mui/material/Box";
@@ -26,6 +28,8 @@ function LoginPage() {
   const [username, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [invalid, setInvalid] = useState(false);
+  const setUserAtom = useSetAtom(userAtom);
+  const currUserAtom = useAtomValue(userAtom);
 
   const auth = async () => {
     try {
@@ -100,6 +104,23 @@ function LoginPage() {
   const errorMesssage = () => {
     console.log("An error has occurred with Google OAuth");
   };
+  // define newUserData type
+  interface NewUserData {
+    id: null | number;
+    created_at: "";
+    username: "";
+    password: "";
+    collections: null | string[];
+  }
+  // const setUserAtom = useSetAtom(user);
+  const setUserAtomState = (newUserData: NewUserData) => {
+    console.log(newUserData);
+    setUserAtom((prev: UserType) => ({
+      ...prev,
+      id: newUserData.id,
+      username: newUserData.username,
+    }));
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -120,6 +141,11 @@ function LoginPage() {
         }),
       });
       if (response.status === 200) {
+        const fetchedResponse = await response.json();
+        setUserAtomState(fetchedResponse);
+        setTimeout(() => {
+          console.log("Updated user atom after fetch: ", currUserAtom);
+        }, 1000); // Small delay to ensure state update is complete
         navigate("/");
       } else {
         setInvalid(true);

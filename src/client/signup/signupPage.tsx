@@ -1,75 +1,105 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { googleLogout, CredentialResponse, GoogleLogin } from '@react-oauth/google';
-import { jwtDecode } from 'jwt-decode';
-import NavBar from '../navBar';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  googleLogout,
+  CredentialResponse,
+  GoogleLogin,
+} from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
+import NavBar from "../navBar";
+import { userAtom, UserType } from "../atoms";
+import { useSetAtom } from "jotai";
 
-import MuiCard from '@mui/material/Card';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import FormLabel from '@mui/material/FormLabel';
-import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
-import { styled } from '@mui/material/styles';
+import MuiCard from "@mui/material/Card";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import FormLabel from "@mui/material/FormLabel";
+import FormControl from "@mui/material/FormControl";
+import Link from "@mui/material/Link";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
 
 function SignupPage() {
   const navigate = useNavigate();
+  const setUserAtom = useSetAtom(userAtom);
 
   // const [ username, setUsername ] = useState('');
   // const [ password, setPassword ] = useState('');
-  const [ invalid, setInvalid ] = useState(false);
+  const [invalid, setInvalid] = useState(false);
 
   function handlePasswordVisibility() {
-    const passwordEl = document.getElementById('password');
-    const passwordImageEl = document.getElementById('passwordImage');
+    const passwordEl = document.getElementById("password");
+    const passwordImageEl = document.getElementById("passwordImage");
 
-    if(passwordEl === null || passwordImageEl === null) {
-      alert('Password Visability Error');
-    } else if(passwordEl.getAttribute('type') === 'password') {
-      passwordEl.setAttribute('type', 'text');
-      passwordImageEl.setAttribute('src', 'https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash.png')
+    if (passwordEl === null || passwordImageEl === null) {
+      alert("Password Visability Error");
+    } else if (passwordEl.getAttribute("type") === "password") {
+      passwordEl.setAttribute("type", "text");
+      passwordImageEl.setAttribute(
+        "src",
+        "https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash.png"
+      );
     } else {
-      passwordEl.setAttribute('type', 'password');
-      passwordImageEl.setAttribute('src', 'https://media.geeksforgeeks.org/wp-content/uploads/20210917145551/eye.png')
+      passwordEl.setAttribute("type", "password");
+      passwordImageEl.setAttribute(
+        "src",
+        "https://media.geeksforgeeks.org/wp-content/uploads/20210917145551/eye.png"
+      );
     }
   }
 
   type dataCredential = {
-    aud: string,
-    azp: string,
-    email: string,
-    email_verified: boolean,
-    exp: number,
-    family_name: string,
-    given_name: string,
-    iss: string,
-    jti: string,
-    name: string,
-    nbf: number,
-    picture: string,
-    sub: string
-  }
+    aud: string;
+    azp: string;
+    email: string;
+    email_verified: boolean;
+    exp: number;
+    family_name: string;
+    given_name: string;
+    iss: string;
+    jti: string;
+    name: string;
+    nbf: number;
+    picture: string;
+    sub: string;
+  };
 
-  const [ user, setUser ] = useState<dataCredential>();
-  const [ profile, setProfile ] = useState();
+  const [user, setUser] = useState<dataCredential>();
+  const [profile, setProfile] = useState();
 
   const responseMessage = (response: CredentialResponse) => {
     console.log(response);
-    if(response.credential !== null) {
+    if (response.credential !== null) {
       const userCredential: dataCredential = jwtDecode(response.credential!);
-      console.log('userCredential: ', userCredential);
-      setUser(userCredential)
+      console.log("userCredential: ", userCredential);
+      setUser(userCredential);
       const { name, email } = userCredential;
     }
-  }
+  };
 
   const errorMesssage = () => {
-    console.log('An error has occurred with Google OAuth');
+    console.log("An error has occurred with Google OAuth");
+  };
+  // define newUserData type
+  interface NewUserData {
+    id: null | number;
+    created_at: "";
+    username: "";
+    password: "";
+    collections: null | string[];
   }
+  // const setUserAtom = useSetAtom(user);
+  const setUserAtomState = (newUserData: NewUserData) => {
+    console.log(newUserData);
+    setUserAtom((prev: UserType) => ({
+      ...prev,
+      id: newUserData.id,
+      username: newUserData.username,
+    }));
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -79,12 +109,12 @@ function SignupPage() {
     //   password: data.get('password'),
     // });
 
-    const usernameEl = document.getElementById('username') as HTMLInputElement;
-    const passwordEl = document.getElementById('password') as HTMLInputElement;
+    const usernameEl = document.getElementById("username") as HTMLInputElement;
+    const passwordEl = document.getElementById("password") as HTMLInputElement;
     const username = usernameEl.value;
     const password = passwordEl.value;
-    console.log({username, password});
-    
+    console.log({ username, password });
+
     try {
       const response = await fetch("/api/user/register", {
         method: "POST",
@@ -94,9 +124,10 @@ function SignupPage() {
           password,
         }),
       });
-      
-      if(response.status === 200) {
-        navigate('/');
+      if (response.status === 200) {
+        const fetchedResponse = await response.json();
+        setUserAtomState(fetchedResponse);
+        navigate("/");
       } else {
         // setCredentialError(true);
         setInvalid(true);
@@ -116,7 +147,7 @@ function SignupPage() {
   //         password,
   //       }),
   //     });
-      
+
   //     if(response.status === 200) {
   //       navigate('/home');
   //     } else {
@@ -127,7 +158,7 @@ function SignupPage() {
   //   }
   // }
 
-  const [ credentialError, setCredentialError ] = useState(false);
+  const [credentialError, setCredentialError] = useState(false);
 
   // const handleSignUp = () => {
   //   const usernameEl = document.getElementById('username') as HTMLInputElement;
@@ -146,33 +177,33 @@ function SignupPage() {
   // };
 
   const Card = styled(MuiCard)(({ theme }) => ({
-    display: 'flex',
-    flexDirection: 'column',
-    alignSelf: 'center',
-    width: '100%',
+    display: "flex",
+    flexDirection: "column",
+    alignSelf: "center",
+    width: "100%",
     padding: theme.spacing(15),
     gap: theme.spacing(10),
-    margin: 'auto',
-    [theme.breakpoints.up('sm')]: {
-      maxWidth: '450px',
+    margin: "auto",
+    [theme.breakpoints.up("sm")]: {
+      maxWidth: "450px",
     },
     boxShadow:
-      'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
-    ...theme.applyStyles('dark', {
+      "hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px",
+    ...theme.applyStyles("dark", {
       boxShadow:
-        'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
+        "hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px",
     }),
   }));
 
   const SignInContainer = styled(Stack)(({ theme }) => ({
-    height: 'calc(100vh - 81px)',
+    height: "calc(100vh - 81px)",
     padding: 20,
     backgroundImage:
-      'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
-    backgroundRepeat: 'no-repeat',
-    ...theme.applyStyles('dark', {
+      "radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))",
+    backgroundRepeat: "no-repeat",
+    ...theme.applyStyles("dark", {
       backgroundImage:
-        'radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))',
+        "radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))",
     }),
   }));
 
@@ -185,26 +216,32 @@ function SignupPage() {
           <Typography
             component="h1"
             variant="h4"
-            sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
+            sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
           >
             Sign up
           </Typography>
-          {invalid ? 
+          {invalid ? (
             <Typography
-              sx={{ width: '96%', alignSelf: 'center', backgroundColor: '#FFCDD2', color: 'red', textAlign: 'center', borderRadius: '7.5px'}}
+              sx={{
+                width: "96%",
+                alignSelf: "center",
+                backgroundColor: "#FFCDD2",
+                color: "red",
+                textAlign: "center",
+                borderRadius: "7.5px",
+              }}
             >
               Username is taken. Please use another username
-            </Typography> 
-            : null
-          }
+            </Typography>
+          ) : null}
           <Box
             component="form"
             onSubmit={handleSubmit}
             noValidate
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
               gap: 2,
             }}
           >
@@ -238,19 +275,19 @@ function SignupPage() {
                 required
                 fullWidth
                 variant="outlined"
-                color={credentialError ? 'error' : 'primary'}
-                sx={{ ariaLabel: 'username' }}
+                color={credentialError ? "error" : "primary"}
+                sx={{ ariaLabel: "username" }}
               />
             </FormControl>
             <FormControl>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <FormLabel htmlFor="password">Password</FormLabel>
               </Box>
               <TextField
                 // error={credentialError}
                 name="password"
                 placeholder="••••••"
-                type='password'
+                type="password"
                 id="password"
                 autoComplete="current-password"
                 autoFocus
@@ -260,9 +297,15 @@ function SignupPage() {
                 // color={credentialError ? 'error' : 'primary'}
                 slotProps={{
                   input: {
-                    endAdornment: 
-                      <img id='passwordImage' src='https://media.geeksforgeeks.org/wp-content/uploads/20210917145551/eye.png' onClick={handlePasswordVisibility} style={{width: '25px', height: '20px'}}></img>
-                  }
+                    endAdornment: (
+                      <img
+                        id="passwordImage"
+                        src="https://media.geeksforgeeks.org/wp-content/uploads/20210917145551/eye.png"
+                        onClick={handlePasswordVisibility}
+                        style={{ width: "25px", height: "20px" }}
+                      ></img>
+                    ),
+                  },
                 }}
               />
             </FormControl>
@@ -271,30 +314,39 @@ function SignupPage() {
               fullWidth
               variant="contained"
               // onClick={handleSignUp}
-              sx={{marginTop: '15px'}}
+              sx={{ marginTop: "15px" }}
             >
               Sign up
             </Button>
-            <Typography sx={{ textAlign: 'center' }}>
-              Already have an account?{' '}
+            <Typography sx={{ textAlign: "center" }}>
+              Already have an account?{" "}
               <span>
-                <Link
-                  href="/login"
-                  sx={{ alignSelf: 'center' }}
-                >
+                <Link href="/login" sx={{ alignSelf: "center" }}>
                   Sign in
                 </Link>
               </span>
             </Typography>
           </Box>
           <Divider>or</Divider>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, alignItems: 'center'}}>
-            <GoogleLogin onSuccess={responseMessage} onError={errorMesssage} width='225px' text='signup_with'/>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+              alignItems: "center",
+            }}
+          >
+            <GoogleLogin
+              onSuccess={responseMessage}
+              onError={errorMesssage}
+              width="225px"
+              text="signup_with"
+            />
           </Box>
         </Card>
       </SignInContainer>
     </>
-  )
-};
+  );
+}
 
 export default SignupPage;
