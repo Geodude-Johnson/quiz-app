@@ -19,29 +19,9 @@ import { styled } from '@mui/material/styles';
 function SignupPage() {
   const navigate = useNavigate();
 
-  const [ email, setEmail ] = useState('');
-  const [ password, setPassword ] = useState('');
-  const [ invalid, setInvalid] = useState(false);
-
-  // const auth = async () => {
-  //   try {
-  //     const response = await fetch("/api/login", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         email,
-  //         password,
-  //       }),
-  //     });
-  //     if(response.status === 200) {
-  //       navigate('/home');
-  //     } else {
-  //       setInvalid(true);
-  //     }
-  //   } catch (error) {
-  //     console.log("Error with Authentication:", error);
-  //   }
-  // }
+  // const [ username, setUsername ] = useState('');
+  // const [ password, setPassword ] = useState('');
+  const [ invalid, setInvalid ] = useState(false);
 
   function handlePasswordVisibility() {
     const passwordEl = document.getElementById('password');
@@ -91,27 +71,79 @@ function SignupPage() {
     console.log('An error has occurred with Google OAuth');
   }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    // const data = new FormData(event.currentTarget);
+    // console.log({
+    //   username: data.get('username'),
+    //   password: data.get('password'),
+    // });
+
+    const usernameEl = document.getElementById('username') as HTMLInputElement;
+    const passwordEl = document.getElementById('password') as HTMLInputElement;
+    const username = usernameEl.value;
+    const password = passwordEl.value;
+    console.log({username, password});
+    
+    try {
+      const response = await fetch("/api/user/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
+      
+      if(response.status === 200) {
+        navigate('/');
+      } else {
+        // setCredentialError(true);
+        setInvalid(true);
+      }
+    } catch (error) {
+      console.log("Error with Authentication:", error);
+    }
   };
+
+  // const signUp = async () => {
+  //   try {
+  //     const response = await fetch("/api/user/register", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         username,
+  //         password,
+  //       }),
+  //     });
+      
+  //     if(response.status === 200) {
+  //       navigate('/home');
+  //     } else {
+  //       setInvalid(true);
+  //     }
+  //   } catch (error) {
+  //     console.log("Error with Authentication:", error);
+  //   }
+  // }
 
   const [ credentialError, setCredentialError ] = useState(false);
 
-  const handleLogin = () => {
-    const email = document.getElementById('email') as HTMLInputElement;
-    const password = document.getElementById('password') as HTMLInputElement;
+  // const handleSignUp = () => {
+  //   const usernameEl = document.getElementById('username') as HTMLInputElement;
+  //   const passwordEl = document.getElementById('password') as HTMLInputElement;
 
-    let isValid = true;
+  //   if(usernameEl) {
+  //     setUsername(usernameEl.value);
+  //   }
+  //   if(passwordEl) {
+  //     setPassword(passwordEl.value);
+  //   }
 
-    
+  //   let isValid = true;
 
-    return isValid;
-  };
+  //   return isValid;
+  // };
 
   const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -146,11 +178,6 @@ function SignupPage() {
 
   return (
     <>
-      {invalid ? 
-        <>
-          <h3>Invalid Credenntials. Please try again</h3>
-        </> : null
-      }
       <NavBar />
       <SignInContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
@@ -162,6 +189,14 @@ function SignupPage() {
           >
             Sign up
           </Typography>
+          {invalid ? 
+            <Typography
+              sx={{ width: '96%', alignSelf: 'center', backgroundColor: '#FFCDD2', color: 'red', textAlign: 'center', borderRadius: '7.5px'}}
+            >
+              Username is taken. Please use another username
+            </Typography> 
+            : null
+          }
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -173,7 +208,7 @@ function SignupPage() {
               gap: 2,
             }}
           >
-            <FormControl>
+            {/* <FormControl>
               <FormLabel htmlFor="name">Name</FormLabel>
               <TextField
                 error={credentialError}
@@ -189,22 +224,22 @@ function SignupPage() {
                 color={credentialError ? 'error' : 'primary'}
                 sx={{ ariaLabel: 'name' }}
               />
-            </FormControl>
+            </FormControl> */}
             <FormControl>
-              <FormLabel htmlFor="email">Email</FormLabel>
+              <FormLabel htmlFor="username">Username</FormLabel>
               <TextField
                 error={credentialError}
-                id="email"
-                type="email"
-                name="email"
-                placeholder="your@email.com"
-                autoComplete="email"
+                id="username"
+                type="username"
+                name="username"
+                placeholder="username"
+                autoComplete="username"
                 autoFocus
                 required
                 fullWidth
                 variant="outlined"
                 color={credentialError ? 'error' : 'primary'}
-                sx={{ ariaLabel: 'email' }}
+                sx={{ ariaLabel: 'username' }}
               />
             </FormControl>
             <FormControl>
@@ -212,7 +247,7 @@ function SignupPage() {
                 <FormLabel htmlFor="password">Password</FormLabel>
               </Box>
               <TextField
-                error={credentialError}
+                // error={credentialError}
                 name="password"
                 placeholder="••••••"
                 type='password'
@@ -222,7 +257,7 @@ function SignupPage() {
                 required
                 fullWidth
                 variant="outlined"
-                color={credentialError ? 'error' : 'primary'}
+                // color={credentialError ? 'error' : 'primary'}
                 slotProps={{
                   input: {
                     endAdornment: 
@@ -235,7 +270,7 @@ function SignupPage() {
               type="submit"
               fullWidth
               variant="contained"
-              onClick={handleLogin}
+              // onClick={handleSignUp}
               sx={{marginTop: '15px'}}
             >
               Sign up

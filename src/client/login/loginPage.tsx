@@ -19,29 +19,29 @@ import { styled } from '@mui/material/styles';
 function LoginPage() {
   const navigate = useNavigate();
 
-  const [ email, setEmail ] = useState('');
+  const [ username, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ invalid, setInvalid] = useState(false);
 
-  // const auth = async () => {
-  //   try {
-  //     const response = await fetch("/api/login", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         email,
-  //         password,
-  //       }),
-  //     });
-  //     if(response.status === 200) {
-  //       navigate('/home');
-  //     } else {
-  //       setInvalid(true);
-  //     }
-  //   } catch (error) {
-  //     console.log("Error with Authentication:", error);
-  //   }
-  // }
+  const auth = async () => {
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
+      if(response.status === 200) {
+        navigate('/home');
+      } else {
+        setInvalid(true);
+      }
+    } catch (error) {
+      console.log("Error with Authentication:", error);
+    }
+  }
 
   function handlePasswordVisibility() {
     const passwordEl = document.getElementById('password');
@@ -95,7 +95,7 @@ function LoginPage() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get('email'),
+      username: data.get('username'),
       password: data.get('password'),
     });
   };
@@ -103,7 +103,7 @@ function LoginPage() {
   const [ credentialError, setCredentialError ] = useState(false);
 
   const handleLogin = () => {
-    const email = document.getElementById('email') as HTMLInputElement;
+    const username = document.getElementById('username') as HTMLInputElement;
     const password = document.getElementById('password') as HTMLInputElement;
 
     let isValid = true;
@@ -174,20 +174,20 @@ function LoginPage() {
             }}
           >
             <FormControl>
-              <FormLabel htmlFor="email">Email</FormLabel>
+              <FormLabel htmlFor="username">Username</FormLabel>
               <TextField
                 error={credentialError}
-                id="email"
-                type="email"
-                name="email"
-                placeholder="your@email.com"
-                autoComplete="email"
+                id="username"
+                type="username"
+                name="username"
+                placeholder="username"
+                autoComplete="username"
                 autoFocus
                 required
                 fullWidth
                 variant="outlined"
                 color={credentialError ? 'error' : 'primary'}
-                sx={{ ariaLabel: 'email' }}
+                sx={{ ariaLabel: 'username' }}
               />
             </FormControl>
             <FormControl>
