@@ -6,8 +6,7 @@ const collectionsController = {
     console.log("user on params ---> ", userId);
     try {
       // Using the Supabase query builder
-      const { data, error } = await supabase
-        .from("collections")
+      const { data, error } = await supabase.from("collections")
         .select("*")
         .eq("userId", userId);
       if (error) {
@@ -28,8 +27,7 @@ const collectionsController = {
       const { name } = req.body;
 
       console.log("Request Body --->", req.body);
-      const { data, error } = await supabase
-        .from("collections")
+      const { data, error } = await from("collections")
         .insert([{ userId, name }]);
 
       if (error) {
@@ -70,8 +68,7 @@ const collectionsController = {
     const { id } = req.params;
     const { name } = req.body;
     try {
-      const { data, error } = await supabase
-        .from("collections")
+      const { data, error } = await supabase.from("collections")
         .insert([{ name, userId: id }])
         .select();
       error
@@ -100,12 +97,12 @@ const collectionsController = {
   getCardsById: async (req, res, next) => {
     const { collectionId } = req.params;
     console.log("triggered getCardsById ", collectionId);
+    console.log("triggered getCardsById ", collectionId);
     try {
-      const { data: cardsArray, error } = await supabase
-        .from("cards")
+      const { data: cardsArray, error } = await supabase.from("cards")
         .select("*")
         .eq("collection_id", collectionId);
-
+      console.log("data", cardsArray)
       error
         ? console.log(`error when trying to fetch cards by user id `, error)
         : res.status(200).json(cardsArray);
@@ -125,8 +122,7 @@ const collectionsController = {
     let { question, answer, category } = req.body;
     category = category.toLowerCase();
     try {
-      const { data, error } = await supabase
-        .from("cards")
+      const { data, error } = await supabase.from("cards")
         .insert([{ question, answer, category, collection_id: collectionId }])
         .select();
       error
