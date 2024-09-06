@@ -99,12 +99,12 @@ const collectionsController = {
   // this is pointless!
   getCardsById: async (req, res, next) => {
     const { collectionId } = req.params;
-    console.log("triggered getCardsById ", collectionsId);
+    console.log("triggered getCardsById ", collectionId);
     try {
       const { data: cardsArray, error } = await supabase
         .from("cards")
         .select("*")
-        .eq("collection_id", collectionsId);
+        .eq("collection_id", collectionId);
 
       error
         ? console.log(`error when trying to fetch cards by user id `, error)
@@ -122,7 +122,8 @@ const collectionsController = {
   addCard: async (req, res, next) => {
     console.log("triggered addCard");
     const { collectionId } = req.params;
-    const { question, answer, category } = req.body;
+    let { question, answer, category } = req.body;
+    category = category.toLowerCase();
     try {
       const { data, error } = await supabase
         .from("cards")

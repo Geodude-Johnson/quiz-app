@@ -25,8 +25,8 @@ app.use("/api/", db);
 // app.get("/api/collectionTest", collectionController.getCollectionByUser);
 // app.post("/GraphQLtest", checkingDB)
 app.use("/api/login", require("./routes/userRoutes"));
-// app.use("/api/collections", require("./routes/collectionsRoutes"));
-// app.use("/search", require("./routes/searchRoutes"));
+app.use("/api/collections", require("./routes/collectionsRoutes"));
+app.get("/api/search/:topic", require("./controllers/searchByTopic.js"));
 // app.use("/home", require("./routes/loginRoutes"));
 
 app.use(
