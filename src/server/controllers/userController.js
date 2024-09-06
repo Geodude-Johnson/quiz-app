@@ -1,37 +1,69 @@
 // add an error catch
+const { NavigateNext } = require("@mui/icons-material");
 const supabase = require("../../db/supabaseClient");
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const userController = {
-  registerUser: async (req, res, next) => {
-    const { username, password } = req.body;
-    // console.log("triggered registerUser");
+  checkUsername: async (req, res, next) => {
     try {
-      const { error } = await supabase
+      const { username } = req.body;
+      // console.log(username);
+      
+      const { data, error } = await supabase
         .from("user")
-        .insert([{ username, password }]);
-      if (error) {
-        console.log("an error occucred when inserting new user, ", error);
-        return res.status(401).send('Username already exists')
-      } else {
-        console.log(`added username: ${username} to DB successful`);
-        return res.status(200).send('Your account has been successfully created')
+        .select()
+        .eq("username", username);
+      console.log('checkUsername data: ', data);
+      res.locals.userExists = false;
+      if(data[0]) {
+        res.locals.userExists = true;
       }
-    } catch (err) {
+      // console.log(res.locals.userExists);
+      return next();
+    } catch (error) {
       next({
-        log: `Express error handler error in userController.registerUser middleware: ${err}`,
+        log: `Express error handler error in userController.checkUsername middleware: ${err}`,
         status: 500,
-        message: { err: "An error occurred in userController.registerUser" },
+        message: { err: "An error occurred in userController.checkUsername" },
       });
     }
   },
+  registerUser: async (req, res, next) => {
+    // console.log("triggered registerUser"); 
+    if(!res.locals.userExists) {
+      const { username, password } = req.body;
+      console.log(req.body);
+      
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+      try {
+        const { data, error } = await supabase
+          .from('user')
+          .insert({ username, password: hashedPassword })
+          .select();
+        console.log('data: ', data);
+        if(error) {
+          next(error);
+        }
+      } catch (err) {
+        next({
+          log: `Express error handler error in userController.registerUser middleware: ${err}`,
+          status: 500,
+          message: { err: "An error occurred in userController.registerUser" },
+        });
+      }
+    }
+    return next();
+  },
   userProfile: async (req, res, next) => {
-    const { id } = req.params;
+    const { username } = req.params;
     // console.log("triggered userProfile");
     try {
       const { data, error } = await supabase
         .from("user")
         .select("*")
-        .eq("id", id);
+        .eq("username", username);
       if (error) console.log(error);
       else console.log("return ", data);
     } catch (err) {
@@ -67,13 +99,15 @@ const userController = {
         .from("user")
         .select("*")
         .eq("username", username);
-      if (error) console.log(error);
-      else {
+      if (error) {
+        next(error)
+      } else {
         if(data[0]) {
-          console.log("data: ", data);
-
-        } else {
-          return res.status(401).send('Username not found');
+          res.locals.authenticated = false;
+          const isCorrectPassword = await bcrypt.compare(password, data[0].password);
+          if (isCorrectPassword) {
+            res.locals.authenticated = true;
+          }
         }
       }
     } catch (err) {
@@ -83,7 +117,7 @@ const userController = {
         message: { err: "An error occurred in userController.userProfile" },
       });
     }
-    return res.sendStatus(200);
+    return next();
   },
 };
 
