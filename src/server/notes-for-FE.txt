@@ -5,7 +5,7 @@ COLLECTIONS ROUTES:
     shape of data response: 
 *** All cards in a specific collection 
     route: GET to /collections/cards/:collectionId
-    shape of data response: 
+    shape of data response: [{question, answer}]
 * Initalize a colloection: 
     route: POST to /collections
     shape of data request: 

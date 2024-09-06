@@ -101,25 +101,44 @@ function LoginPage() {
     console.log("An error has occurred with Google OAuth");
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get("username"),
-      password: data.get("password"),
-    });
+
+    const usernameEl = document.getElementById("username") as HTMLInputElement;
+    const passwordEl = document.getElementById("password") as HTMLInputElement;
+    const username = usernameEl.value;
+    const password = passwordEl.value;
+    console.log({ username, password });
+
+    try {
+      const response = await fetch("/api/user/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
+      if (response.status === 200) {
+        navigate("/");
+      } else {
+        setInvalid(true);
+      }
+    } catch (error) {
+      console.log("Error with Authentication:", error);
+    }
   };
 
   const [credentialError, setCredentialError] = useState(false);
 
-  const handleLogin = () => {
-    const username = document.getElementById("username") as HTMLInputElement;
-    const password = document.getElementById("password") as HTMLInputElement;
+  // const handleLogin = () => {
+  //   const username = document.getElementById('username') as HTMLInputElement;
+  //   const password = document.getElementById('password') as HTMLInputElement;
 
-    let isValid = true;
+  //   let isValid = true;
 
-    return isValid;
-  };
+  //   return isValid;
+  // };
 
   const Card = styled(MuiCard)(({ theme }) => ({
     display: "flex",
@@ -154,11 +173,6 @@ function LoginPage() {
 
   return (
     <>
-      {invalid ? (
-        <>
-          <h3>Invalid Credenntials. Please try again</h3>
-        </>
-      ) : null}
       <NavBar />
       <SignInContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
@@ -170,6 +184,20 @@ function LoginPage() {
           >
             Sign in
           </Typography>
+          {invalid ? (
+            <Typography
+              sx={{
+                width: "96%",
+                alignSelf: "center",
+                backgroundColor: "#FFCDD2",
+                color: "red",
+                textAlign: "center",
+                borderRadius: "7.5px",
+              }}
+            >
+              Invalid credentials
+            </Typography>
+          ) : null}
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -232,7 +260,7 @@ function LoginPage() {
               type="submit"
               fullWidth
               variant="contained"
-              onClick={handleLogin}
+              // onClick={handleLogin}
               sx={{ marginTop: "15px" }}
             >
               Sign in
