@@ -133,17 +133,3 @@ const ReviewAll: React.FC = () => {
 };
 
 export default ReviewAll;
-/*
-*
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import CardActionArea from '@mui/material/CardActionArea';
-import { styled } from '@mui/material/styles';
-import collectionLogo from '../../assets/collectionLogo.png';
-import AddIcon from '@mui/icons-material/Add';
-import { Add } from '@mui/icons-material';
-import Fab from '@mui/material/Fab';
-/**collections styling  */
