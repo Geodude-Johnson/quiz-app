@@ -6,6 +6,7 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import Button, { ButtonProps } from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import NavBar from '../navBar';
 // import {CSS} from '@dnd-kit/utilities';
 
 const StyledDecisionSection = styled('div')(({ theme }) => ({
@@ -22,6 +23,11 @@ const StyledDecisionSection = styled('div')(({ theme }) => ({
 }));
 
 export const CollectionOptions = styled(Button)(({ theme }) => ({
+  color: theme.palette.getContrastText('#ff4081'),
+  "&:hover": {
+    backgroundColor: '#FFFFFF',
+    color: 'black',
+  },
     position: "relative",
     top: 220,
     left: 159,
@@ -32,10 +38,9 @@ export const CollectionOptions = styled(Button)(({ theme }) => ({
     margin: 10,
     fontSize: 25,
     backgroundColor: '#ff4081',
-    color: 'white',
 }))
-  
-const DNDReview = () => {
+
+const Review = () => {
     const navigate = useNavigate();
     const handleReviewBack = () => {
       navigate('/');
@@ -48,6 +53,7 @@ const DNDReview = () => {
     }
   return (
     <>
+    <NavBar></NavBar>
     <StyledDecisionSection>
     <div>What collection would you like to review?</div>
     </StyledDecisionSection>
@@ -63,4 +69,4 @@ const DNDReview = () => {
     </>
   )
 }
-  export default DNDReview;
+  export default Review;
