@@ -50,7 +50,7 @@ const Collections = (props: collectionProps) => {
     
   return (
     <div>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 345, minHeight: 300 }}>
         <CardActionArea onClick={handleClick}>
           <CardMedia
             component="img"
