@@ -48,15 +48,16 @@ const IndividualCollections = () => {
 
   return (
     <div>
-        {showIndivCollection ? (
+        {showIndivCollection ? (<>
           <StyledCollection>
             <h3>Collection data</h3>
             <ColorButton variant="contained" onClick={handleReviewClick}>
-        REVIEW QUESTIONS
-      </ColorButton>
-            <UserDataset />
+              REVIEW QUESTIONS
+            </ColorButton>
             <ColorButton variant="contained" onClick={goBack}>back</ColorButton>
           </StyledCollection>
+          <UserDataset />
+          </>
         ): <CardCollections />}
     </div>
   );

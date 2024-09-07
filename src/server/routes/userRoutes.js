@@ -20,7 +20,7 @@ router.post("/register", checkUsername, registerUser, (req, res) => {
   if (res.locals.userExists) {
     return res.status(401).send("Username already exists");
   } else {
-    return res.status(200).send(res.locals.user[0]);
+    return res.status(200).send(res.locals.user);
   }
 });
 
@@ -36,7 +36,7 @@ router.post("/login", loginUser, (req, res) => {
 // google login
 router.post("/google/login", googleLogin, (req, res) => {
   if(res.locals.authenticated) {
-    return res.status(200).send('Successfully logged in');
+    return res.status(200).send(res.locals.user);
   } else {
     return res.status(401).send('Google account is not connnected');
   }
@@ -47,7 +47,7 @@ router.post("/google/register", checkGoogleId, googleRegister, (req, res) => {
   if(res.locals.userExists) {
     return res.status(401).send('Google account already exists');
   } else {
-    return res.status(200).send('Your account has been successfully created');
+    return res.status(200).send(res.locals.user);
   }
 });
 

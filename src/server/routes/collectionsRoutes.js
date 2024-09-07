@@ -10,6 +10,7 @@ const {
   // updateCollection,
   // deleteCard,
   addCard,
+  getRandomCardsById,
 } = require("../controllers/collectionControllers");
 
 /* ==========> following routes for CRUD for collections <==========*/
@@ -25,6 +26,8 @@ router.get("/:id", getCollectionByUser, (req, res) => {
 });
 
 router.get("/cards/:collectionId", getCardsById);
+
+router.get("/cards/review/:collectionId", getRandomCardsById);
 
 // router.delete("/:id", deleteCollection);
 

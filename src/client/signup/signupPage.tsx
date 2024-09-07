@@ -98,7 +98,9 @@ function SignupPage() {
           }),
         });
         if (response.status === 200) {
-          navigate("/");
+          const fetchedResponse = await response.json();
+          setUserAtomState(fetchedResponse);
+          // navigate('/'); ,+ this is happening when the serUserAtrom State is changing.
         } else if (response.status === 401) {
           setGoogleInvalid(true);
         } else {
@@ -123,7 +125,7 @@ function SignupPage() {
   }
   // const setUserAtom = useSetAtom(user);
   const setUserAtomState = (newUserData: NewUserData) => {
-    console.log(newUserData);
+    console.log("jotai atom: ", newUserData);
     setUserAtom((prev: UserType) => ({
       ...prev,
       id: newUserData.id,

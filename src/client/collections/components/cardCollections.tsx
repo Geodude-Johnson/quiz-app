@@ -13,6 +13,8 @@ import { Add } from "@mui/icons-material";
 import Fab from "@mui/material/Fab";
 import { useState, useEffect } from "react";
 import Collections from "./collections";
+import { userAtom, collectionAtom, CollectionType } from "../../atoms";
+import { useAtom, useSetAtom } from "jotai";
 import AddCollectionPopover from "./addCollectionPopover";
 
 /**collections styling  */
@@ -64,7 +66,7 @@ const CardCollections = () => {
 
   const handleClick = () => {
     setShowCard(!showCard);
-    setShowIndividualCollections(!showIndividualCollections);
+    // setShowIndividualCollections(!showIndividualCollections);
     setStep(1);
   };
 
@@ -83,10 +85,11 @@ const CardCollections = () => {
   }
 
   const [allCollections, setAllCollections] = useState([]);
+  const [currUserAtom, setUserAtom] = useAtom(userAtom);
 
   const getCollections = async () => {
     try {
-      const response = await fetch(`/api/collections/${id}`, {
+      const response = await fetch(`/api/collections/${currUserAtom.id}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -101,6 +104,7 @@ const CardCollections = () => {
             <Collections
               name={el.name}
               key={el.id}
+              collectionId={el.id}
               showCard={showCard}
               showIndividualCollections={showIndividualCollections}
               setShowCard={setShowCard}

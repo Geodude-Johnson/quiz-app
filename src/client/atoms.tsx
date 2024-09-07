@@ -10,4 +10,16 @@ const userAtom = atom<UserType>({
   username: "",
 });
 
-export { userAtom };
+export interface CollectionType {
+  id: number | null;
+  userId: number | null;
+  name: string;
+}
+
+const collectionAtom = atom<CollectionType>({
+  id: null,
+  userId: null,
+  name: "",
+});
+
+export { userAtom, collectionAtom };

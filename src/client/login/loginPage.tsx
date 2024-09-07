@@ -76,18 +76,18 @@ function LoginPage() {
     sub: string;
   };
 
-  const [ user, setUser ] = useState<dataCredential>();
-  const [ profile, setProfile ] = useState();
-  const [ googleInvalid, setGoogleInvalid ] = useState(false);
-  const [ generalError, setGeneralError ] = useState(false);
+  const [user, setUser] = useState<dataCredential>();
+  const [profile, setProfile] = useState();
+  const [googleInvalid, setGoogleInvalid] = useState(false);
+  const [generalError, setGeneralError] = useState(false);
 
   const responseMessage = async (response: CredentialResponse) => {
     console.log(response);
 
-    if(response.credential !== null) {
+    if (response.credential !== null) {
       const userCredential: dataCredential = jwtDecode(response.credential!);
-      console.log('userCredential: ', userCredential);
-      setUser(userCredential)
+      console.log("userCredential: ", userCredential);
+      setUser(userCredential);
 
       // sub is profile specific id
       const { name, email, sub } = userCredential;
@@ -99,11 +99,16 @@ function LoginPage() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            sub
+            sub,
           }),
         });
-        if(response.status === 200) {
-          navigate('/');
+        if (response.status === 200) {
+          const fetchedResponse = await response.json();
+          setUserAtomState(fetchedResponse);
+          setTimeout(() => {
+            console.log("Updated user atom after fetch: ", currUserAtom);
+          }, 1000); // Small delay to ensure state update is complete
+          navigate("/");
         } else if (response.status === 401) {
           setGoogleInvalid(true);
         } else {
@@ -128,7 +133,7 @@ function LoginPage() {
   }
 
   const setUserAtomState = (newUserData: NewUserData) => {
-    console.log("in set User Atom State");
+    console.log("jotai atom: ", newUserData);
     setUserAtom((prev: UserType) => ({
       ...prev,
       id: newUserData.id,
@@ -143,8 +148,8 @@ function LoginPage() {
     const passwordEl = document.getElementById("password") as HTMLInputElement;
     const username = usernameEl.value;
     const password = passwordEl.value;
-    console.log({username, password});
-    
+    console.log({ username, password });
+
     setInvalid(false);
     setGoogleInvalid(false);
     setCredentialError(false);
@@ -242,25 +247,36 @@ function LoginPage() {
               }}
             >
               Invalid credentials
-            </Typography> 
-          ): null
-          }
-          {googleInvalid ? 
+            </Typography>
+          ) : null}
+          {googleInvalid ? (
             <Typography
-              sx={{ width: '96%', alignSelf: 'center', backgroundColor: '#FFCDD2', color: 'red', textAlign: 'center', borderRadius: '7.5px'}}
+              sx={{
+                width: "96%",
+                alignSelf: "center",
+                backgroundColor: "#FFCDD2",
+                color: "red",
+                textAlign: "center",
+                borderRadius: "7.5px",
+              }}
             >
               Google account is not connected. Please sign up
-            </Typography> 
-            : null
-          }
-          {generalError ? 
+            </Typography>
+          ) : null}
+          {generalError ? (
             <Typography
-              sx={{ width: '96%', alignSelf: 'center', backgroundColor: '#FFCDD2', color: 'red', textAlign: 'center', borderRadius: '7.5px'}}
+              sx={{
+                width: "96%",
+                alignSelf: "center",
+                backgroundColor: "#FFCDD2",
+                color: "red",
+                textAlign: "center",
+                borderRadius: "7.5px",
+              }}
             >
               An error has occurred. Please try again
-            </Typography> 
-            : null
-          }
+            </Typography>
+          ) : null}
           <Box
             component="form"
             onSubmit={handleSubmit}
