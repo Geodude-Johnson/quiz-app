@@ -185,9 +185,9 @@ const userController = {
       // console.log(res.locals.userExists);
     } catch (error) {
       next({
-        log: `Express error handler error in userController.checkUsername middleware: ${err}`,
+        log: `Express error handler error in userController.checkGoogleId middleware: ${err}`,
         status: 500,
-        message: { err: "An error occurred in userController.checkUsername" },
+        message: { err: "An error occurred in userController.checkGoogleId" },
       });
     }
     return next();
