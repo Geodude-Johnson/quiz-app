@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
-import { blue, teal } from "@mui/material/colors";
 import NavBar from "../navBar";
 interface Card {
   question: string;
