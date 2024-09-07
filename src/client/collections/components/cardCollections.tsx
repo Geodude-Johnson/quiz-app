@@ -9,10 +9,13 @@ import { styled } from "@mui/material/styles";
 import collectionLogo from "../../assets/collectionLogo.png";
 import IndividualCollections from "./individualCollections";
 import AddIcon from "@mui/icons-material/Add";
+import { Add } from "@mui/icons-material";
 import Fab from "@mui/material/Fab";
-import { useState } from "react";
-import AddCollectionPopover from "./addCollectionPopover"; // Import the popover component
+import { useState, useEffect } from "react";
+import Collections from "./collections";
+import AddCollectionPopover from "./addCollectionPopover";
 
+/**collections styling  */
 const StyledCollection1 = styled("div")(({ theme }) => ({
   display: "grid",
   gridTemplateRows: "1fr 1fr 1fr",
@@ -64,6 +67,54 @@ const CardCollections = () => {
     setStep(1);
   };
 
+  useEffect(() => {
+    getCollections();
+  }, []);
+
+  // get id from state
+  let id = 88;
+
+  interface collectionDB {
+    id: number;
+    created_at: string;
+    userId: number;
+    name: string;
+  }
+
+  const [allCollections, setAllCollections] = useState([]);
+
+  const getCollections = async () => {
+    try {
+      const response = await fetch(`/api/collections/${id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      console.log(response);
+
+      if (response.status === 200) {
+        const data = await response.json();
+        console.log(data);
+        const temp: any = [];
+        data.forEach((el: collectionDB) => {
+          temp.push(
+            <Collections
+              name={el.name}
+              key={el.id}
+              showCard={showCard}
+              showIndividualCollections={showIndividualCollections}
+              setShowCard={setShowCard}
+              setShowIndividualCollections={setShowIndividualCollections}
+            />
+          );
+          console.log("collections: ", temp);
+        });
+        setAllCollections(temp);
+      }
+    } catch (error) {
+      console.log("Error with getting collections:", error);
+    }
+  };
+
   return (
     <div>
       {showCard && (
@@ -72,7 +123,8 @@ const CardCollections = () => {
             <AddCard onClick={handleAddCard} />
           </StyledFab>
           <StyledCollection1>
-            <Card sx={{ maxWidth: 345 }}>
+            {allCollections}
+            {/* <Card sx={{ maxWidth: 345 }}>
               <CardActionArea onClick={handleClick}>
                 <CardMedia
                   component="img"
@@ -83,9 +135,6 @@ const CardCollections = () => {
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     User collection 1 name
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: "primary.light" }}>
-                    User description of collection
                   </Typography>
                 </CardContent>
               </CardActionArea>
@@ -103,9 +152,6 @@ const CardCollections = () => {
                   <Typography gutterBottom variant="h5" component="div">
                     User collection 2 name
                   </Typography>
-                  <Typography variant="body2" sx={{ color: "primary.light" }}>
-                    User description of collection
-                  </Typography>
                 </CardContent>
               </CardActionArea>
             </Card>
@@ -122,12 +168,9 @@ const CardCollections = () => {
                   <Typography gutterBottom variant="h5" component="div">
                     User collection 3 name
                   </Typography>
-                  <Typography variant="body2" sx={{ color: "primary.light" }}>
-                    User description of collection
-                  </Typography>
                 </CardContent>
               </CardActionArea>
-            </Card>
+            </Card> */}
           </StyledCollection1>
         </>
       )}

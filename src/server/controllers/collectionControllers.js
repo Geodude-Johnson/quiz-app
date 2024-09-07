@@ -15,7 +15,7 @@ const collectionsController = {
         throw error;
       }
       res.locals.allCollections = data;
-      // console.log('THIS IS THE COLLECTIONS TABLE --> ', data)
+      console.log('THIS IS THE COLLECTIONS TABLE --> ', data)
     } catch (error) {
       console.error("Error fetching data:", error);
     }

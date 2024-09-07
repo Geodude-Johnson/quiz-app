@@ -76,14 +76,37 @@ function SignupPage() {
 
   const [user, setUser] = useState<dataCredential>();
   const [profile, setProfile] = useState();
+  const [googleInvalid, setGoogleInvalid] = useState(false);
+  const [generalError, setGeneralError] = useState(false);
 
-  const responseMessage = (response: CredentialResponse) => {
-    console.log(response);
+  const responseMessage = async (response: CredentialResponse) => {
     if (response.credential !== null) {
       const userCredential: dataCredential = jwtDecode(response.credential!);
       console.log("userCredential: ", userCredential);
       setUser(userCredential);
-      const { name, email } = userCredential;
+
+      const { name, email, sub } = userCredential;
+      setInvalid(false);
+      setGoogleInvalid(false);
+      setCredentialError(false);
+      try {
+        const response = await fetch("/api/user/google/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sub,
+          }),
+        });
+        if (response.status === 200) {
+          navigate("/");
+        } else if (response.status === 401) {
+          setGoogleInvalid(true);
+        } else {
+          setGeneralError(true);
+        }
+      } catch (error) {
+        console.log("Error with Authentication:", error);
+      }
     }
   };
 
@@ -121,6 +144,9 @@ function SignupPage() {
     const username = usernameEl.value;
     const password = passwordEl.value;
     console.log({ username, password });
+    setInvalid(false);
+    setGoogleInvalid(false);
+    setCredentialError(false);
 
     try {
       const response = await fetch("/api/user/register", {
@@ -136,7 +162,6 @@ function SignupPage() {
         setUserAtomState(fetchedResponse);
         setNavigateAfterUpdate(true);
       } else {
-        // setCredentialError(true);
         setInvalid(true);
       }
     } catch (error) {
@@ -239,6 +264,34 @@ function SignupPage() {
               }}
             >
               Username is taken. Please use another username
+            </Typography>
+          ) : null}
+          {googleInvalid ? (
+            <Typography
+              sx={{
+                width: "96%",
+                alignSelf: "center",
+                backgroundColor: "#FFCDD2",
+                color: "red",
+                textAlign: "center",
+                borderRadius: "7.5px",
+              }}
+            >
+              Google account already in use. Please sign in
+            </Typography>
+          ) : null}
+          {generalError ? (
+            <Typography
+              sx={{
+                width: "96%",
+                alignSelf: "center",
+                backgroundColor: "#FFCDD2",
+                color: "red",
+                textAlign: "center",
+                borderRadius: "7.5px",
+              }}
+            >
+              An error has occurred. Please try again
             </Typography>
           ) : null}
           <Box
