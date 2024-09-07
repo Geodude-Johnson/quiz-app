@@ -7,6 +7,8 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
+import { collectionAtom } from "../atoms";
+import { useAtom } from "jotai";
 import { blue, teal } from "@mui/material/colors";
 import NavBar from "../navBar";
 interface Card {
@@ -99,10 +101,12 @@ const ReviewAll: React.FC = () => {
     getData();
   }, []);
 
+  const [currColleciontAtom, setCollectionAtom] = useAtom(collectionAtom);
+
   const getData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/collections/cards/88`,
+        `http://localhost:8080/api/collections/cards/review/${currColleciontAtom.id}`,
         {
           method: "GET",
           headers: {

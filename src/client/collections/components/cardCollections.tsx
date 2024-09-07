@@ -21,6 +21,8 @@ import { Add } from '@mui/icons-material';
 import Fab from '@mui/material/Fab';
 import { useState, useEffect } from 'react';
 import Collections from './collections';
+import { userAtom, collectionAtom, CollectionType } from "../../atoms";
+import { useAtom, useSetAtom } from "jotai";
 
 /**collections styling  */
 const StyledCollection1 = styled('div')(({ theme }) => ({
@@ -61,10 +63,10 @@ const CardCollections = () => {
   const [showCard, setShowCard] = useState(true); // Track card visibility
   const [showIndividualCollections, setShowIndividualCollections] = useState(false); // Track individual collections visibility
 
-  const handleClick = () => {
-    setShowCard(!showCard);
-    setShowIndividualCollections(!showIndividualCollections);
-  };
+  // const handleClick = () => {
+  //   setShowCard(!showCard);
+  //   setShowIndividualCollections(!showIndividualCollections);
+  // };
 
   useEffect(() => {
     getCollections();
@@ -81,10 +83,12 @@ const CardCollections = () => {
   }
 
   const [allCollections, setAllCollections] = useState([]);
+  const [currUserAtom, setUserAtom] = useAtom(userAtom);
+  
 
   const getCollections = async() => {
     try {
-      const response = await fetch(`/api/collections/${id}`, {
+      const response = await fetch(`/api/collections/${currUserAtom.id}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -95,7 +99,7 @@ const CardCollections = () => {
         console.log(data);
         const temp : any = [];
         data.forEach((el: collectionDB) => {
-          temp.push(<Collections name={el.name} key={el.id} showCard={showCard} showIndividualCollections={showIndividualCollections} setShowCard={setShowCard} setShowIndividualCollections={setShowIndividualCollections}/>);
+          temp.push(<Collections name={el.name} key={el.id} collectionId={el.id} showCard={showCard} showIndividualCollections={showIndividualCollections} setShowCard={setShowCard} setShowIndividualCollections={setShowIndividualCollections}/>);
           console.log('collections: ', temp);
         })
         setAllCollections(temp);

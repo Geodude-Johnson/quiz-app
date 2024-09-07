@@ -93,6 +93,11 @@ function LoginPage() {
           }),
         });
         if(response.status === 200) {
+          const fetchedResponse = await response.json();
+          setUserAtomState(fetchedResponse);
+          setTimeout(() => {
+            console.log("Updated user atom after fetch: ", currUserAtom);
+          }, 1000); // Small delay to ensure state update is complete
           navigate('/');
         } else if (response.status === 401) {
           setGoogleInvalid(true);
@@ -118,7 +123,7 @@ function LoginPage() {
   }
   // const setUserAtom = useSetAtom(user);
   const setUserAtomState = (newUserData: NewUserData) => {
-    console.log(newUserData);
+    console.log('jotai atom: ', newUserData);
     setUserAtom((prev: UserType) => ({
       ...prev,
       id: newUserData.id,

@@ -2,6 +2,8 @@ import * as React from 'react';
 import IndividualCard from './individualCard';
 import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
+import { collectionAtom } from "../../atoms";
+import { useAtom } from "jotai";
 
 
 interface MockData {
@@ -46,9 +48,14 @@ const UserDataset = () => {
   // hard coded
   let collectionId = 88;
 
+  // const [currUserAtom, setUserAtom] = useAtom(userAtom);
+  // console.log(currUserAtom);
+  
+  const [currColleciontAtom, setCollectionAtom] = useAtom(collectionAtom);
+
   const getCards = async() => {
     try {
-      const response = await fetch(`/api/collections/cards/${collectionId}`, {
+      const response = await fetch(`/api/collections/cards/${currColleciontAtom.id}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -59,7 +66,7 @@ const UserDataset = () => {
         console.log(data);
         const temp : any = [];
         data.forEach((el: card) => {
-          temp.push(<IndividualCard question={el.question} answer={el.answer} category={el.category}/>);
+          temp.push(<IndividualCard question={el.question} answer={el.answer} category={el.category} key={el.id}/>);
           console.log('collections: ', temp);
         })
         setAllCards(temp);
