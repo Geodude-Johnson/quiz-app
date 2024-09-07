@@ -9,7 +9,7 @@
 <img src="https://cdn.iconscout.com/icon/free/png-512/free-react-1-282599.png?f=webp&w=512" alt = "react js" id = "react" style="width: 40px; height: 40px"/> 
 <img src="https://mui.com/static/logo.png" id="npm" alt="npm logo" style="width: 40px; height: 40px"/>
 <img src="https://cdn.iconscout.com/icon/free/png-512/free-npm-3521612-2945056.png?f=webp&w=512" id="npm" alt="npm logo" style="width: 40px; height: 40px"/>
-<img src="../quiz-app/src/client/assets/jotaiLogo.png" id="npm" alt="npm logo" style="width: 40px; height: 40px"/>
+<img src="../quiz-app/src/client/assets/jotaiLogo.png" style="width: 40px; height: 40px"/>
 </div>
 
 
