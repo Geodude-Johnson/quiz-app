@@ -97,7 +97,6 @@ const collectionsController = {
   getCardsById: async (req, res, next) => {
     const { collectionId } = req.params;
     console.log("triggered getCardsById ", collectionId);
-    console.log("triggered getCardsById ", collectionId);
     try {
       const { data: cardsArray, error } = await supabase.from("cards")
         .select("*")
@@ -143,6 +142,32 @@ const collectionsController = {
     console.log("triggered deleteCard");
     res.sendStatus(200);
   },
+  getRandomCardsById: async (req, res, next) => {
+    const { collectionId } = req.params;
+    console.log("triggered getRandomCardsById", collectionId);
+    try {
+      const { data: cardsArray, error } = await supabase.from("cards")
+        .select("*")
+        .eq("collection_id", collectionId);
+      console.log("data", cardsArray)
+      if(error) throw error
+      else {
+        for (let i = cardsArray.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [cardsArray[i], cardsArray[j]] = [cardsArray[j], cardsArray[i]];
+        };
+        res.status(200).json(cardsArray);
+      }
+    } catch (err) {
+      next({
+        log: `Express error handler error in collectionController.getCardById middleware: ${err}`,
+        status: 500,
+        message: {
+          err: "An error occurred in collectionController.getCardById",
+        },
+      });
+    }
+  }
 };
 
 module.exports = collectionsController;

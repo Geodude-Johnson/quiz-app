@@ -2,7 +2,7 @@ import * as React from 'react';
 import IndividualCard from './individualCard';
 import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
-import { userAtom, collectionAtom } from "../../atoms";
+import { collectionAtom } from "../../atoms";
 import { useAtom } from "jotai";
 
 
