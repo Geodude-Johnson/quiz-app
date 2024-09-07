@@ -81,9 +81,6 @@ const CardCollections = () => {
                   <Typography gutterBottom variant="h5" component="div">
                     User collection 1 name
                   </Typography>
-                  <Typography variant="body2" sx={{ color: "primary.light" }}>
-                    User description of collection
-                  </Typography>
                 </CardContent>
               </CardActionArea>
             </Card>
@@ -101,9 +98,6 @@ const CardCollections = () => {
                   <Typography gutterBottom variant="h5" component="div">
                     User collection 2 name
                   </Typography>
-                  <Typography variant="body2" sx={{ color: 'primary.light' }}>
-                    User description of collection
-                  </Typography>
                 </CardContent>
               </CardActionArea>
             </Card>
@@ -119,9 +113,6 @@ const CardCollections = () => {
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     User collection 3 name
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: 'primary.light' }}>
-                    User description of collection
                   </Typography>
                 </CardContent>
               </CardActionArea>

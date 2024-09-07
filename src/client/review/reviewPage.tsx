@@ -3,9 +3,6 @@ hello
 *change the review all endpoint to be querying and a specific endpoint for the user
 */
 import React from 'react';
-import {DndContext} from '@dnd-kit/core';
-import Draggable from './dragAndDrop/draggableReview';
-import Droppable from './dragAndDrop/droppableReview';
 import {styled} from '@mui/material/styles';
 import Button, { ButtonProps } from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
@@ -63,11 +60,6 @@ const DNDReview = () => {
     <CollectionOptions onClick={handleReviewSome}>
     (Coming Soon....)
     </CollectionOptions>
-    
-    {/* <DndContext>
-      <Draggable />
-      <Droppable />
-    </DndContext> */}
     </>
   )
 }
