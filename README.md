@@ -27,7 +27,7 @@
 <li>Run npm run dev to run the application locally</li>
 <li>Create an account or sign in with your Google account</li>
 <li>View study collections associated with your account, add collections and cards to that collection, review all cards within your specified collections</li>
-<li>Happy Studying From Team Quizuru !!</li>
+<li>Happy Studying From Team Quizuru!</li>
 </ul>
 
 
