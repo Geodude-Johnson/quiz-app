@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   googleLogout,
@@ -8,7 +8,7 @@ import {
 import { jwtDecode } from "jwt-decode";
 import NavBar from "../navBar";
 import { userAtom, UserType } from "../atoms";
-import { useSetAtom } from "jotai";
+import { useAtom } from "jotai";
 
 import MuiCard from "@mui/material/Card";
 import Box from "@mui/material/Box";
@@ -24,11 +24,18 @@ import { styled } from "@mui/material/styles";
 
 function SignupPage() {
   const navigate = useNavigate();
-  const setUserAtom = useSetAtom(userAtom);
-
+  const [currUserAtom, setUserAtom] = useAtom(userAtom);
+  const [navigateAfterUpdate, setNavigateAfterUpdate] = useState(false);
   // const [ username, setUsername ] = useState('');
   // const [ password, setPassword ] = useState('');
   const [invalid, setInvalid] = useState(false);
+
+  useEffect(() => {
+    if (navigateAfterUpdate) {
+      console.log("User atom updated: ", currUserAtom);
+      navigate("/");
+    }
+  }, [currUserAtom, navigateAfterUpdate]);
 
   function handlePasswordVisibility() {
     const passwordEl = document.getElementById("password");
@@ -127,7 +134,7 @@ function SignupPage() {
       if (response.status === 200) {
         const fetchedResponse = await response.json();
         setUserAtomState(fetchedResponse);
-        navigate("/");
+        setNavigateAfterUpdate(true);
       } else {
         // setCredentialError(true);
         setInvalid(true);

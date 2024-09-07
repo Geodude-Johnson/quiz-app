@@ -14,7 +14,7 @@ const {
 /* ==========> following routes for CRUD for collections <==========*/
 /* ==========> These routes will probably need to be protected <====*/
 
-router.post("/:id", addCollection); // => need the user Id of the collection!
+router.post("/", addCollection); // => need the user Id of the collection!
 
 // needs to have a card id in the body
 // router.patch("/:id", updateCollection);

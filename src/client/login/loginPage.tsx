@@ -8,7 +8,7 @@ import {
 import { jwtDecode } from "jwt-decode";
 import NavBar from "../navBar";
 import { userAtom, UserType } from "../atoms";
-import { useSetAtom, useAtomValue } from "jotai";
+import { useSetAtom, useAtom } from "jotai";
 
 import MuiCard from "@mui/material/Card";
 import Box from "@mui/material/Box";
@@ -21,6 +21,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
+import { useEffect } from "react";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -28,8 +29,17 @@ function LoginPage() {
   const [username, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [invalid, setInvalid] = useState(false);
-  const setUserAtom = useSetAtom(userAtom);
-  const currUserAtom = useAtomValue(userAtom);
+  const [navigateAfterUpdate, setNavigateAfterUpdate] = useState(false);
+  // const setUserAtom = useSetAtom(userAtom);
+  // const currUserAtom = useAtomValue(userAtom);
+  const [currUserAtom, setUserAtom] = useAtom(userAtom);
+
+  useEffect(() => {
+    if (navigateAfterUpdate) {
+      console.log("User atom updated: ", currUserAtom);
+      navigate("/");
+    }
+  }, [currUserAtom, navigateAfterUpdate]);
 
   const auth = async () => {
     try {
@@ -112,9 +122,9 @@ function LoginPage() {
     password: "";
     collections: null | string[];
   }
-  // const setUserAtom = useSetAtom(user);
+
   const setUserAtomState = (newUserData: NewUserData) => {
-    console.log(newUserData);
+    console.log("in set User Atom State");
     setUserAtom((prev: UserType) => ({
       ...prev,
       id: newUserData.id,
@@ -143,10 +153,7 @@ function LoginPage() {
       if (response.status === 200) {
         const fetchedResponse = await response.json();
         setUserAtomState(fetchedResponse);
-        setTimeout(() => {
-          console.log("Updated user atom after fetch: ", currUserAtom);
-        }, 1000); // Small delay to ensure state update is complete
-        navigate("/");
+        setNavigateAfterUpdate(true);
       } else {
         setInvalid(true);
       }
@@ -154,6 +161,11 @@ function LoginPage() {
       console.log("Error with Authentication:", error);
     }
   };
+
+  // useEffect(() => {
+  //   console.log("Updated user atom after fetch: ", currUserAtom);
+  //   navigate("/");
+  // }, [currUserAtom]);
 
   const [credentialError, setCredentialError] = useState(false);
 
