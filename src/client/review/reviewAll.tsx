@@ -31,23 +31,31 @@ const ReviewWelcome = styled("div")(({ theme }) => ({
 }));
 
 const QuestionStyle = styled("div")(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center', // Center items horizontally
+  alignItems: "center", // Center items vertically
   backgroundColor: "#FFFFFF",
   color: "#006666",
-  width: "50%",
+  width: "50%", 
+  left: 40,
   position: "relative",
   padding: 5,
-  left: 40,
   top: 65,
+  height: 200,
 }));
 
 const AnswerStyle = styled("div")(({ theme }) => ({
+  // display: 'flex',
+  justifyContent: 'center', // Center items horizontally
+  alignItems: "center", // Center items vertically
   backgroundColor: "#FFFFFF",
-  position: "relative",
   color: "#006666",
-  width: "50%",
+  width: "50%", 
+  left: 40,
+  position: "relative",
   padding: 5,
-  margin: 10,
   top: 65,
+  height: 200,
   display: "none", // Initially hide the answer
 }));
 
@@ -121,6 +129,7 @@ const ReviewAll: React.FC = () => {
           <li>  {" Questions are displayed one at a time"}</li>
           <li> {"Click the question card to display the answer"}</li>
           <li> {"Click the next button to display the next question"}</li>
+          <li> {"Ready for a break? Hit Back to go back to your collection"}</li>
         </ul>
       </DirectionsStyle>
       <div>
@@ -130,7 +139,7 @@ const ReviewAll: React.FC = () => {
               <div>{data[currentCardIndex].question}</div>
             </QuestionStyle>
             <AnswerStyle style={{ display: showAnswer ? "block" : "none" }}>
-              <div>{data[currentCardIndex].answer}</div>
+              <div><em>Answer:</em> {data[currentCardIndex].answer}</div>
             </AnswerStyle>
           </div>
         )}
