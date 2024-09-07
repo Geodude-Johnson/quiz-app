@@ -71,11 +71,10 @@ function SignupPage() {
   const [ generalError, setGeneralError ] = useState(false);
 
   const responseMessage = async (response: CredentialResponse) => {
-    console.log(response);
     if (response.credential !== null) {
       const userCredential: dataCredential = jwtDecode(response.credential!);
       console.log('userCredential: ', userCredential);
-      setUser(userCredential)
+      setUser(userCredential);
 
       const { name, email, sub } = userCredential;
       setInvalid(false);
@@ -258,7 +257,7 @@ function SignupPage() {
             >
               Username is taken. Please use another username
             </Typography> 
-            : null
+          ): null
           }
           {googleInvalid ? 
             <Typography
@@ -389,6 +388,6 @@ function SignupPage() {
       </SignInContainer>
     </>
   );
-}
+};
 
 export default SignupPage;
