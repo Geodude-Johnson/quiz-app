@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import collectionLogo from "../../assets/collectionLogo.png";
 import { useState, useEffect } from 'react';
+import { collectionAtom, CollectionType } from "../../atoms";
+import { useSetAtom } from "jotai";
 /**collections styling  */
 
 interface collectionProps {
@@ -14,19 +16,38 @@ interface collectionProps {
   showIndividualCollections: boolean;
   setShowCard: Function;
   setShowIndividualCollections: Function;
+  collectionId: number;
 }
 
 const Collections = (props: collectionProps) => {
-  const { name, showCard, showIndividualCollections, setShowCard, setShowIndividualCollections } = props;
+  const { name, showCard, showIndividualCollections, setShowCard, setShowIndividualCollections, collectionId } = props;
 
   // const [showCard, setShowCard] = useState(true); // Track card visibility
   // const [showIndividualCollections, setShowIndividualCollections] = useState(false); // Track individual collections visibility
+  
+  interface NewCollectionData {
+    id: null | number;
+    name: string;
+  }
+  
+  const setCollectionAtom = useSetAtom(collectionAtom);
 
+  const setCollectionAtomState = (collectionData: NewCollectionData) => {
+    console.log('jotai atom: ', collectionData);
+    setCollectionAtom((prev: CollectionType) => ({
+      ...prev,
+      id: collectionData.id,
+      name: collectionData.name,
+    }));
+  };
+  
   const handleClick = () => {
+    console.log(props.collectionId)
+    setCollectionAtomState({id: collectionId, name: name})
     setShowCard(!showCard);
     setShowIndividualCollections(!showIndividualCollections);
   };
-
+    
   return (
     <div>
       <Card sx={{ maxWidth: 345 }}>

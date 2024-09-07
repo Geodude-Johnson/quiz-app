@@ -43,7 +43,7 @@ const userController = {
           .insert({ username, password: hashedPassword })
           .select();
         console.log("data: ", data);
-        res.locals.user = data;
+        res.locals.user = data[0];
         if (error) throw error;
       } catch (err) {
         next({
@@ -135,6 +135,7 @@ const userController = {
       } else {
         res.locals.authenticated = false;
         if(data[0]) {
+          res.locals.user = data[0];
           res.locals.authenticated = true;
         }
       }
@@ -158,6 +159,7 @@ const userController = {
           .insert({ googleId: sub })
           .select();
         console.log('data: ', data);
+        res.locals.user = data[0];
         if(error) throw error;
       } catch (err) {
         next({
@@ -192,7 +194,7 @@ const userController = {
       });
     }
     return next();
-  }
+  },
 };
 
 module.exports = userController;
