@@ -98,7 +98,6 @@ function SignupPage() {
       } catch (error) {
         console.log("Error with Authentication:", error);
       }
-
     }
   };
 

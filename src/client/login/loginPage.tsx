@@ -28,6 +28,7 @@ function LoginPage() {
   const [invalid, setInvalid] = useState(false);
   const setUserAtom = useSetAtom(userAtom);
   const currUserAtom = useAtomValue(userAtom);
+
   function handlePasswordVisibility() {
     const passwordEl = document.getElementById("password");
     const passwordImageEl = document.getElementById("passwordImage");
@@ -69,7 +70,6 @@ function LoginPage() {
   const [ profile, setProfile ] = useState();
   const [ googleInvalid, setGoogleInvalid ] = useState(false);
   const [ generalError, setGeneralError ] = useState(false);
-
 
   const responseMessage = async (response: CredentialResponse) => {
     console.log(response);
@@ -138,7 +138,6 @@ function LoginPage() {
     setInvalid(false);
     setGoogleInvalid(false);
     setCredentialError(false);
-
     try {
       const response = await fetch("/api/user/login", {
         method: "POST",

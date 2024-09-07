@@ -19,7 +19,9 @@ import IndividualCollections from "./individualCollections";
 import AddIcon from '@mui/icons-material/Add';
 import { Add } from '@mui/icons-material';
 import Fab from '@mui/material/Fab';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Collections from './collections';
+
 /**collections styling  */
 const StyledCollection1 = styled('div')(({ theme }) => ({
   display: 'grid',
@@ -53,7 +55,7 @@ const AddCard = () => {
       <AddIcon onClick={handleAddCard}/>
     </div>
   )
-  }
+}
   
 const CardCollections = () => {
   const [showCard, setShowCard] = useState(true); // Track card visibility
@@ -64,13 +66,53 @@ const CardCollections = () => {
     setShowIndividualCollections(!showIndividualCollections);
   };
 
+  useEffect(() => {
+    getCollections();
+  }, [])
+
+  // get id from state
+  let id = 88;
+
+  interface collectionDB {
+    id: number;
+    created_at: string;
+    userId: number;
+    name: string;    
+  }
+
+  const [allCollections, setAllCollections] = useState([]);
+
+  const getCollections = async() => {
+    try {
+      const response = await fetch(`/api/collections/${id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      console.log(response);
+      
+      if (response.status === 200) {
+        const data = await response.json();
+        console.log(data);
+        const temp : any = [];
+        data.forEach((el: collectionDB) => {
+          temp.push(<Collections name={el.name} key={el.id} showCard={showCard} showIndividualCollections={showIndividualCollections} setShowCard={setShowCard} setShowIndividualCollections={setShowIndividualCollections}/>);
+          console.log('collections: ', temp);
+        })
+        setAllCollections(temp);
+      }
+    } catch (error) {
+      console.log("Error with getting collections:", error);
+    }
+  }
+
   return (
     <div>
       {showCard && (
          <><StyledFab color="secondary" aria-label="add" className="styled-fab">
           <AddCard />
         </StyledFab><StyledCollection1>
-            <Card sx={{ maxWidth: 345 }}>
+          {allCollections}
+            {/* <Card sx={{ maxWidth: 345 }}>
               <CardActionArea onClick={handleClick}>
                 <CardMedia
                   component="img"
@@ -116,7 +158,7 @@ const CardCollections = () => {
                   </Typography>
                 </CardContent>
               </CardActionArea>
-            </Card>
+            </Card> */}
           </StyledCollection1></>
       )}
       {showIndividualCollections && <IndividualCollections />}
