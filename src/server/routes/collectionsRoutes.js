@@ -11,6 +11,7 @@ const {
   // deleteCard,
   addCard,
 } = require("../controllers/collectionControllers");
+
 /* ==========> following routes for CRUD for collections <==========*/
 /* ==========> These routes will probably need to be protected <====*/
 
@@ -19,7 +20,9 @@ router.post("/:id", addCollection); // => need the user Id of the collection!
 // needs to have a card id in the body
 // router.patch("/:id", updateCollection);
 
-router.get("/:userId", getCollectionByUser);
+router.get("/:id", getCollectionByUser, (req, res) => {
+  return res.status(200).json(res.locals.allCollections);
+});
 
 router.get("/cards/:collectionId", getCardsById);
 

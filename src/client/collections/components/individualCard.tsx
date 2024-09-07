@@ -8,23 +8,21 @@ import collectionLogo from "../../assets/collectionLogo.png";
 import { useState, useEffect } from 'react';
 /**collections styling  */
 
-interface collectionProps {
-  name: string;
-  showCard: boolean;
-  showIndividualCollections: boolean;
-  setShowCard: Function;
-  setShowIndividualCollections: Function;
+interface cardProps {
+  question: string;
+  answer: string;
+  category: string; 
 }
 
-const Collections = (props: collectionProps) => {
-  const { name, showCard, showIndividualCollections, setShowCard, setShowIndividualCollections } = props;
+const IndividualCard = (props: cardProps) => {
+  const { question, answer, category } = props;
 
   // const [showCard, setShowCard] = useState(true); // Track card visibility
   // const [showIndividualCollections, setShowIndividualCollections] = useState(false); // Track individual collections visibility
-
+  
+  const [showAnswer, setShowAnswer] = useState(false);
   const handleClick = () => {
-    setShowCard(!showCard);
-    setShowIndividualCollections(!showIndividualCollections);
+    setShowAnswer(!showAnswer);
   };
 
   return (
@@ -38,8 +36,16 @@ const Collections = (props: collectionProps) => {
             alt="collection-logo" />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {name}
+              {category}
             </Typography>
+            <Typography gutterBottom variant="h5" component="div">
+              {question}
+            </Typography>
+            {showAnswer ? 
+              <Typography gutterBottom variant="h5" component="div">
+                {answer}
+              </Typography> : null 
+            }
             {/* <Typography variant="body2" sx={{ color: "primary.light" }}>
               User description of collection
             </Typography> */}
@@ -50,4 +56,4 @@ const Collections = (props: collectionProps) => {
   );
 }
 
-export default Collections;
+export default IndividualCard;

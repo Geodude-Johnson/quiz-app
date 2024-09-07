@@ -4,23 +4,24 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
+import { styled } from '@mui/material/styles';
 import collectionLogo from "../../assets/collectionLogo.png";
+import IndividualCollections from "./individualCollections";
+import AddIcon from '@mui/icons-material/Add';
+import { Add } from '@mui/icons-material';
+import Fab from '@mui/material/Fab';
 import { useState, useEffect } from 'react';
 /**collections styling  */
 
-interface collectionProps {
+interface collection {
   name: string;
-  showCard: boolean;
-  showIndividualCollections: boolean;
-  setShowCard: Function;
-  setShowIndividualCollections: Function;
 }
 
-const Collections = (props: collectionProps) => {
-  const { name, showCard, showIndividualCollections, setShowCard, setShowIndividualCollections } = props;
+const unitCollections = (props: collection) => {
+  const { name } = props;
 
-  // const [showCard, setShowCard] = useState(true); // Track card visibility
-  // const [showIndividualCollections, setShowIndividualCollections] = useState(false); // Track individual collections visibility
+  const [showCard, setShowCard] = useState(true); // Track card visibility
+  const [showIndividualCollections, setShowIndividualCollections] = useState(false); // Track individual collections visibility
 
   const handleClick = () => {
     setShowCard(!showCard);
@@ -50,4 +51,4 @@ const Collections = (props: collectionProps) => {
   );
 }
 
-export default Collections;
+export default unitCollections;
