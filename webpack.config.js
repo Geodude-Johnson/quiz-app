@@ -58,22 +58,6 @@ const config = {
           extensions: [".ts", ".tsx", ".js", ".json"],
         },
       },
-      //    { test: /\.(js|jsx)$/,
-      //     use: [
-      //       {
-      //         loader: 'babel-loader',
-      //         options: {
-      //           presets: [
-      //             '@babel/preset-env', '@babel/preset-react'
-      //           ],
-      //         },
-      //       },
-      //     ],
-      //     exclude: /node_modules/,
-      //   },
-
-      // Add your rules for custom modules here
-      // Learn more about loaders from https://webpack.js.org/loaders/
     ],
   },
 };

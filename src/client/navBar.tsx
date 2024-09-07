@@ -27,14 +27,14 @@ export default function NavBar() {
 
   const handleMenuClose = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(null);
-    if (event.currentTarget.textContent === "Sign in") {
-      navigate("/login");
+    if (event.currentTarget.textContent === "Sign out") {
+      navigate("/");
     }
   };
 
   const goToCollections = () => {
     setAnchorEl(null);
-    navigate('/');
+    navigate('/home');
   };
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -58,7 +58,7 @@ export default function NavBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={goToCollections}>View Collections</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Sign in</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Sign out</MenuItem>
     </Menu>
   );
   return (

@@ -39,7 +39,7 @@ const IndividualCollections = () => {
 
   const goBack = () => {
     setShowCollection(false); // Set showCollection to false to hide individual collections
-    navigate('/');
+    navigate('/home');
   };
 
   const handleReviewClick = () => {
