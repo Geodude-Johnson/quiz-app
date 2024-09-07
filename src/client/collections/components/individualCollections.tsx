@@ -2,23 +2,30 @@
 // /collections route shows the individual info and needs to dynamically render the user's collections
 //try using react router instead of conditional rendering to get back to the collection page / endpoint
 import React, { useState } from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import CardActionArea from '@mui/material/CardActionArea';
-import { styled } from '@mui/material/styles';
 import UserDataset from "./collectionData";
 import CardCollections from "./cardCollections";
 import { useNavigate } from 'react-router-dom';
+import { styled } from "@mui/material/styles";
+import Button, { ButtonProps } from "@mui/material/Button";
+import { blue } from "@mui/material/colors";
 
 const StyledCollection = styled("div")(({ theme }) => ({
     position: "relative",
-    top: 70,
-    left: 359,
+    left: 20,
 }));
 
-function IndividualCollections() {
+const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
+  color: theme.palette.getContrastText(blue[500]),
+  "&:hover": {
+    backgroundColor: blue[600],
+  },
+  position: "relative", 
+  top: 50, // Adjust top position
+  left: 50, // Adjust left position
+}));
+
+
+const IndividualCollections = () => {
   const [showIndivCollection, setShowCollection] = useState(true);
   const navigate = useNavigate();
   const handleClick = () => {
@@ -35,14 +42,20 @@ function IndividualCollections() {
     navigate('/');
   };
 
+  const handleReviewClick = () => {
+    navigate("/review");
+  };
 
   return (
     <div>
         {showIndivCollection ? (
           <StyledCollection>
-            <p>Collection data</p>
+            <h3>Collection data</h3>
+            <ColorButton variant="contained" onClick={handleReviewClick}>
+        REVIEW QUESTIONS
+      </ColorButton>
             <UserDataset />
-            <button onClick={goBack}>back</button>
+            <ColorButton variant="contained" onClick={goBack}>back</ColorButton>
           </StyledCollection>
         ): <CardCollections />}
     </div>
@@ -50,3 +63,5 @@ function IndividualCollections() {
 }
 
 export default IndividualCollections;
+
+// custom color button: https://mui.com/material-ui/react-button/
