@@ -6,6 +6,9 @@ const {
   userProfile,
   deleteUser,
   loginUser,
+  googleLogin,
+  googleRegister,
+  checkGoogleId,
 } = require("../controllers/userController.js");
 
 /* ==========> following routes for GET user profiles using AUTH and POST for adding a user <==========*/
@@ -27,6 +30,24 @@ router.post("/login", loginUser, (req, res) => {
     return res.status(200).send('Successfully logged in');
   } else {
     return res.status(401).send('Invalid credentials');
+  }
+});
+
+// google login
+router.post("/google/login", googleLogin, (req, res) => {
+  if(res.locals.authenticated) {
+    return res.status(200).send('Successfully logged in');
+  } else {
+    return res.status(401).send('Google account is not connnected');
+  }
+});
+
+// google register
+router.post("/google/register", checkGoogleId, googleRegister, (req, res) => {
+  if(res.locals.userExists) {
+    return res.status(401).send('Google account already exists');
+  } else {
+    return res.status(200).send('Your account has been successfully created');
   }
 });
 

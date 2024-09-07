@@ -63,7 +63,9 @@ function LoginPage() {
       const userCredential: dataCredential = jwtDecode(response.credential!);
       console.log('userCredential: ', userCredential);
       setUser(userCredential)
-      const { name, email } = userCredential;
+
+      // sub is profile specific id
+      const { name, email, sub } = userCredential;
       navigate('/')
     }
   }
