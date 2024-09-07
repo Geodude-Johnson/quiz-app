@@ -14,6 +14,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,6 +57,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function NavBar() {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -73,9 +75,15 @@ export default function NavBar() {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+    navigate('/login');
     handleMobileMenuClose();
   };
 
+  const goToCollections = () => {
+    setAnchorEl(null);
+    navigate('/');
+    handleMobileMenuClose();
+  };
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
@@ -97,8 +105,8 @@ export default function NavBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Sign in</MenuItem>
+      <MenuItem onClick={goToCollections}>View Collections</MenuItem>
     </Menu>
   );
 
@@ -167,21 +175,12 @@ export default function NavBar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            GeoDude Johnson
+            {"Quizuru"}
           </Typography>
         
-          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ flexGrow: 1 }} /> 
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            {/** Bell Icon with rendered amount of notifications showing in red (1) */}
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={1} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            {/**account profile avatar */}
             <IconButton
               size="large"
               edge="end"
@@ -194,7 +193,7 @@ export default function NavBar() {
               <AccountCircle />
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+          {/* <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="show more"
@@ -203,12 +202,12 @@ export default function NavBar() {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <MoreIcon />
+              <MoreIcon/>
             </IconButton>
-          </Box>
+          </Box> */}
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
+      {/* {renderMobileMenu} */}
       {renderMenu}
     </Box>
   );

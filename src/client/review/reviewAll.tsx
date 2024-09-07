@@ -6,9 +6,9 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { CollectionOptions } from "./reviewPage";
 import { Button } from "@mui/material";
-
+import { blue, teal } from "@mui/material/colors";
+import NavBar from "../navBar";
 interface Card {
   question: string;
   answer: string;
@@ -31,12 +31,12 @@ const ReviewWelcome = styled("div")(({ theme }) => ({
 }));
 
 const QuestionStyle = styled("div")(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center', // Center items horizontally
+  display: "flex",
+  justifyContent: "center", // Center items horizontally
   alignItems: "center", // Center items vertically
   backgroundColor: "#FFFFFF",
   color: "#006666",
-  width: "50%", 
+  width: "50%",
   left: 40,
   position: "relative",
   padding: 5,
@@ -46,11 +46,11 @@ const QuestionStyle = styled("div")(({ theme }) => ({
 
 const AnswerStyle = styled("div")(({ theme }) => ({
   // display: 'flex',
-  justifyContent: 'center', // Center items horizontally
+  justifyContent: "center", // Center items horizontally
   alignItems: "center", // Center items vertically
   backgroundColor: "#FFFFFF",
   color: "#006666",
-  width: "50%", 
+  width: "50%",
   left: 40,
   position: "relative",
   padding: 5,
@@ -69,13 +69,19 @@ const DirectionsStyle = styled("div")(({ theme }) => ({
 }));
 
 const NextStyle = styled(Button)(({ theme }) => ({
-  position: "relative",
-  top: 75,
-  left: 40,
-  padding: 7,
+  color: theme.palette.getContrastText('#ff4081'),
+  "&:hover": {
+    backgroundColor: '#FFFFFF',
+    color: 'black',
+  },
   backgroundColor: "#ff4081",
-  width: "50%",
-  color: "white"
+  width: "max-content",
+  padding: 60,
+  borderRadius: "25%",
+  margin: 20, 
+  left: 550,   
+  top: 75,
+  position: "relative"
 }));
 
 const ReviewAll: React.FC = () => {
@@ -122,14 +128,18 @@ const ReviewAll: React.FC = () => {
 
   return (
     <>
+    <NavBar></NavBar>
       <ReviewWelcome color="secondary">GOOD LUCK !</ReviewWelcome>
       <DirectionsStyle>
         <h3> Directions </h3>
         <ul>
-          <li>  {" Questions are displayed one at a time"}</li>
+          <li> {" Questions are displayed one at a time"}</li>
           <li> {"Click the question card to display the answer"}</li>
           <li> {"Click the next button to display the next question"}</li>
-          <li> {"Ready for a break? Hit Back to go back to your collection"}</li>
+          <li>
+            {" "}
+            {"Ready for a break? Hit Back to go back to your collection"}
+          </li>
         </ul>
       </DirectionsStyle>
       <div>
@@ -139,13 +149,17 @@ const ReviewAll: React.FC = () => {
               <div>{data[currentCardIndex].question}</div>
             </QuestionStyle>
             <AnswerStyle style={{ display: showAnswer ? "block" : "none" }}>
-              <div><em>Answer:</em> {data[currentCardIndex].answer}</div>
+              <div>
+                <em>Answer:</em> {data[currentCardIndex].answer}
+              </div>
             </AnswerStyle>
           </div>
         )}
-        <NextStyle onClick={handleNextCard}><h3>Next Question</h3></NextStyle>
+        <NextStyle onClick={handleNextCard}>
+          <h3>Next Question</h3>
+        </NextStyle>
       </div>
-      <CollectionOptions onClick={handleGoBack}>Back</CollectionOptions>
+      <NextStyle onClick={handleGoBack} style={{left: 0,top: 50, width: '50%', backgroundColor: '#008080'}}>Exit Review</NextStyle>
     </>
   );
 };
