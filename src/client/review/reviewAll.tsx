@@ -140,6 +140,7 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { CollectionOptions } from "./reviewPage";
+import { Button } from "@mui/material";
 
 interface Card {
   question: string;
@@ -168,7 +169,7 @@ const QuestionStyle = styled("div")(({ theme }) => ({
   width: "50%",
   position: "relative",
   padding: 5,
-  margin: 10,
+  left: 40,
   top: 65,
 }));
 
@@ -190,6 +191,16 @@ const DirectionsStyle = styled("div")(({ theme }) => ({
   padding: 7,
   backgroundColor: "#008080",
   width: "50%",
+}));
+
+const NextStyle = styled(Button)(({ theme }) => ({
+  position: "relative",
+  top: 75,
+  left: 40,
+  padding: 7,
+  backgroundColor: "#ff4081",
+  width: "50%",
+  color: "white"
 }));
 
 const ReviewAll: React.FC = () => {
@@ -260,7 +271,7 @@ const ReviewAll: React.FC = () => {
             </AnswerStyle>
           </div>
         )}
-        <button onClick={handleNextCard}>Next</button>
+        <NextStyle onClick={handleNextCard}><h3>Next Question</h3></NextStyle>
       </div>
       <CollectionOptions onClick={handleGoBack}>Back</CollectionOptions>
     </>
