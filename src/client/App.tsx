@@ -11,7 +11,7 @@ import * as React from 'react';
 import LoginPage from './login/loginPage';
 import SignupPage from './signup/signupPage';
 import IndividualCollections from './collections/components/individualCollections';
-import DNDReview from './review/reviewPage';
+import Review from './review/reviewPage';
 import ReviewAll from './review/reviewAll';
 
 const App: React.FC = () => {
@@ -26,7 +26,7 @@ const App: React.FC = () => {
           <Route path="/collections" element={<IndividualCollections />} />
           {/* <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} /> */}
-          <Route path="/review" element={<DNDReview />} />
+          <Route path="/review" element={<Review />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/reviewAll" element={<ReviewAll />} />
           <Route path="/signup" element={<SignupPage />} />

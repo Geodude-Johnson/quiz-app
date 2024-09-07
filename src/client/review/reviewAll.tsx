@@ -1,149 +1,16 @@
-//query for cards within selected collection
-// import React, { useEffect, useState } from "react";
-// import { styled } from "@mui/material/styles";
-// import { useNavigate } from "react-router-dom";
-// import { CollectionOptions } from "./reviewPage";
-// interface Card {
-//   question: string;
-//   answer: string;
-//   created_at: string;
-//   category: string;
-//   collection_name: string | null;
-//   id: number;
-//   collection_id: number;
-// }
-// const ReviewWelcome = styled("div")(({ theme }) => ({
-//   display: "inline-block",
-//   position: "relative",
-//   top: 40,
-//   left: 40,
-//   width: "50%",
-//   gap: "8px",
-//   backgroundColor: "#008080",
-//   textAlign: "center",
-// }));
-
-// const QuestionStyle = styled("div")(({ theme }) => ({
-//   backgroundColor: "#FFFFFF",
-//   color: "#006666",
-//   width: "50%",
-//   position: "relative",
-//   padding: 5,
-//   margin: 10,
-//   top: 65,
-// }));
-
-// const AnswerStyle = styled("div")(({ theme }) => ({
-//   backgroundColor: "#FFFFFF",
-//   position: "relative",
-//   color: "#006666",
-//   width: "50%",
-//   padding: 5,
-//   margin: 10,
-//   top: 65,
-// }));
-
-// const DirectionsStyle = styled("div")(({ theme }) => ({
-//   position: "relative",
-//   top: 45,
-//   left: 40,
-//   padding: 7,
-//   backgroundColor: "#008080",
-//   width: "50%",
-// }));
-
-// const ReviewAll: React.FC = (props: any) => {
-//   const navigate = useNavigate();
-
-//   const handleGoBack = () => {
-//     navigate("/review");
-//   };
-
-//   const [data, setData] = useState<Card[]>([]);
-
-//   useEffect(() => {
-//     getData();
-//   }, []);
-
-//   const getData = async () => {
-//     try {
-//       const response = await fetch(
-//         `http://localhost:8080/api/collections/cards/88`,
-//         {
-//           method: "GET",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//         }
-//       );
-//       const fetchedData = await response.json();
-//       if (fetchedData.length > 0) {
-//         setData(fetchedData);
-//         console.log("fetched", fetchedData);
-//       } else {
-//         console.log("No cards found in fetched data");
-//       }
-//     } catch (error) {
-//       console.log("error fetching data:", error);
-//     }
-//   };
-
-//   return (
-//     <>
-//       {/** heading  */}
-//       <ReviewWelcome color="secondary">GOOD LUCK !</ReviewWelcome>
-//           {/** directions  */}
-//           <DirectionsStyle>
-//             <h3> Directions </h3>
-//             <ul>
-//               <li> Questions are displayed on the left</li>
-//               <li> Answers are displayed on the right</li>
-//               <li>
-//                 {" "}
-//                 Drag and drop the correct <em>question</em> from the{" "}
-//                 <em>left</em>, to the correct <em>answer</em> on the{" "}
-//                 <em>right </em>
-//               </li>
-//             </ul>
-//           </DirectionsStyle>
-//           {/* *questions/answers*/}
-//           <div
-//             style={{
-//               display: "grid",
-//               gridTemplateColumns: "1fr 1fr",
-//               gridGap: "5px",
-//             }}
-//           >
-//             {data.map((item, index) => (
-//               <div key={index}>
-//                 {/**questions */}
-//                 <QuestionStyle>
-//                   <div>{item.question}</div>
-//                 </QuestionStyle>
-//                 {/**answers */}
-//                 <AnswerStyle>
-//                   <div>{item.answer}</div>
-//                 </AnswerStyle>
-//               </div>
-//             ))}
-//           </div>
-//         {/* </Draggable>
-//       </DndContext> */}
-//       <CollectionOptions onClick={handleGoBack}>Back</CollectionOptions>
-//     </>
-//   );
-// };
-
-// export default ReviewAll;
+/**
+ * to do: randomize the questions that appear
+ * change the review button to be within the specific collection
+ */
 
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { CollectionOptions } from "./reviewPage";
 import { Button } from "@mui/material";
 import { collectionAtom } from "../atoms";
 import { useAtom } from "jotai";
-
+import { blue, teal } from "@mui/material/colors";
+import NavBar from "../navBar";
 interface Card {
   question: string;
   answer: string;
@@ -166,23 +33,31 @@ const ReviewWelcome = styled("div")(({ theme }) => ({
 }));
 
 const QuestionStyle = styled("div")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center", // Center items horizontally
+  alignItems: "center", // Center items vertically
   backgroundColor: "#FFFFFF",
   color: "#006666",
   width: "50%",
+  left: 40,
   position: "relative",
   padding: 5,
-  left: 40,
   top: 65,
+  height: 200,
 }));
 
 const AnswerStyle = styled("div")(({ theme }) => ({
+  // display: 'flex',
+  justifyContent: "center", // Center items horizontally
+  alignItems: "center", // Center items vertically
   backgroundColor: "#FFFFFF",
-  position: "relative",
   color: "#006666",
   width: "50%",
+  left: 40,
+  position: "relative",
   padding: 5,
-  margin: 10,
   top: 65,
+  height: 200,
   display: "none", // Initially hide the answer
 }));
 
@@ -196,13 +71,19 @@ const DirectionsStyle = styled("div")(({ theme }) => ({
 }));
 
 const NextStyle = styled(Button)(({ theme }) => ({
-  position: "relative",
-  top: 75,
-  left: 40,
-  padding: 7,
+  color: theme.palette.getContrastText('#ff4081'),
+  "&:hover": {
+    backgroundColor: '#FFFFFF',
+    color: 'black',
+  },
   backgroundColor: "#ff4081",
-  width: "50%",
-  color: "white"
+  width: "max-content",
+  padding: 60,
+  borderRadius: "25%",
+  margin: 20, 
+  left: 550,   
+  top: 75,
+  position: "relative"
 }));
 
 const ReviewAll: React.FC = () => {
@@ -249,18 +130,23 @@ const ReviewAll: React.FC = () => {
     setShowAnswer(false); // Reset showAnswer for the next card
   };
 
+  const RandomOrder = () => {
+
+  };
+  
   return (
     <>
+    <NavBar></NavBar>
       <ReviewWelcome color="secondary">GOOD LUCK !</ReviewWelcome>
       <DirectionsStyle>
         <h3> Directions </h3>
         <ul>
-          <li> Questions are displayed on the left</li>
-          <li> Answers are displayed on the right</li>
+          <li> {" Questions are displayed one at a time"}</li>
+          <li> {"Click the question card to display the answer"}</li>
+          <li> {"Click the next button to display the next question"}</li>
           <li>
             {" "}
-            Drag and drop the correct <em>question</em> from the <em>left</em>,
-            to the correct <em>answer</em> on the <em>right </em>
+            {"Ready for a break? Hit Back to go back to your collection"}
           </li>
         </ul>
       </DirectionsStyle>
@@ -271,13 +157,17 @@ const ReviewAll: React.FC = () => {
               <div>{data[currentCardIndex].question}</div>
             </QuestionStyle>
             <AnswerStyle style={{ display: showAnswer ? "block" : "none" }}>
-              <div>{data[currentCardIndex].answer}</div>
+              <div>
+                <em>Answer:</em> {data[currentCardIndex].answer}
+              </div>
             </AnswerStyle>
           </div>
         )}
-        <NextStyle onClick={handleNextCard}><h3>Next Question</h3></NextStyle>
+        <NextStyle onClick={handleNextCard}>
+          <h3>Next Question</h3>
+        </NextStyle>
       </div>
-      <CollectionOptions onClick={handleGoBack}>Back</CollectionOptions>
+      <NextStyle onClick={handleGoBack} style={{left: 0,top: 50, width: '50%', backgroundColor: '#008080'}}>Exit Review</NextStyle>
     </>
   );
 };
