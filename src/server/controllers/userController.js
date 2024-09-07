@@ -1,5 +1,4 @@
 // add an error catch
-const { NavigateNext } = require("@mui/icons-material");
 const supabase = require("../../db/supabaseClient");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -19,8 +18,8 @@ const userController = {
       if (data[0]) {
         res.locals.userExists = true;
       }
+      if (error) throw error;
       // console.log(res.locals.userExists);
-      return next();
     } catch (error) {
       next({
         log: `Express error handler error in userController.checkUsername middleware: ${err}`,
@@ -28,6 +27,7 @@ const userController = {
         message: { err: "An error occurred in userController.checkUsername" },
       });
     }
+    return next();
   },
   registerUser: async (req, res, next) => {
     console.log("triggered registerUser");
@@ -44,9 +44,7 @@ const userController = {
           .select();
         console.log("data: ", data);
         res.locals.user = data;
-        if (error) {
-          next(error);
-        }
+        if (error) throw error;
       } catch (err) {
         next({
           log: `Express error handler error in userController.registerUser middleware: ${err}`,
@@ -65,7 +63,7 @@ const userController = {
         .from("user")
         .select("*")
         .eq("username", username);
-      if (error) console.log(error);
+      if (error) throw error;
       else console.log("return ", data);
     } catch (err) {
       next({
@@ -81,7 +79,7 @@ const userController = {
     // console.log("triggered deleteUser");
     try {
       const { error } = await supabase.from("user").delete().eq("id", id);
-      if (error) console.log(error);
+      if (error) throw error;
       else console.log(`deleted user with and id of: ${id} successful`);
     } catch (err) {
       next({
@@ -101,7 +99,7 @@ const userController = {
         .select("*")
         .eq("username", username);
       if (error) {
-        next(error);
+        throw error;
       } else {
         if (data[0]) {
           res.locals.authenticated = false;
@@ -125,6 +123,76 @@ const userController = {
 
     return next();
   },
+  googleLogin: async (req, res, next) => {
+    const { sub } = req.body;
+    try {
+      const { data, error } = await supabase
+        .from("user")
+        .select("*")
+        .eq("googleId", sub);
+      if (error) {
+        throw error;
+      } else {
+        res.locals.authenticated = false;
+        if(data[0]) {
+          res.locals.authenticated = true;
+        }
+      }
+    } catch (err) {
+      next({
+        log: `Express error handler error in userController.googleLogin middleware: ${err}`,
+        status: 500,
+        message: { err: "An error occurred in userController.googleLogin" },
+      });
+    }
+    return next();
+  },
+  googleRegister: async (req, res, next) => {
+    if(!res.locals.userExists) {
+      const { sub } = req.body;
+      // console.log(req.body);
+
+      try {
+        const { data, error } = await supabase
+          .from('user')
+          .insert({ googleId: sub })
+          .select();
+        console.log('data: ', data);
+        if(error) throw error;
+      } catch (err) {
+        next({
+          log: `Express error handler error in userController.googleRegister middleware: ${err}`,
+          status: 500,
+          message: { err: "An error occurred in userController.googleRegister" },
+        });
+      }
+    }
+    return next();
+  },
+  checkGoogleId: async (req, res, next) => {
+    try {
+      const { sub } = req.body;
+      
+      const { data, error } = await supabase
+        .from("user")
+        .select()
+        .eq("googleId", sub);
+      console.log('checkGoogleId data: ', data);
+      res.locals.userExists = false;
+      if(data[0]) {
+        res.locals.userExists = true;
+      }
+      if (error) throw error;
+      // console.log(res.locals.userExists);
+    } catch (error) {
+      next({
+        log: `Express error handler error in userController.checkUsername middleware: ${err}`,
+        status: 500,
+        message: { err: "An error occurred in userController.checkUsername" },
+      });
+    }
+    return next();
+  }
 };
 
 module.exports = userController;
