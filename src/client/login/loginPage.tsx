@@ -231,7 +231,7 @@ function LoginPage() {
               }}
             >
               Invalid credentials
-            </Typography> 
+            </Typography>) 
             : null
           }
           {googleInvalid ? 
