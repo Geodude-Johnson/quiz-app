@@ -1,5 +1,4 @@
 // add an error catch
-const { NavigateNext } = require("@mui/icons-material");
 const supabase = require("../../db/supabaseClient");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;

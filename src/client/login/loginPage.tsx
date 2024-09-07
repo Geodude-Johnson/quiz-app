@@ -19,8 +19,6 @@ import { styled } from '@mui/material/styles';
 function LoginPage() {
   const navigate = useNavigate();
 
-  const [ username, setEmail ] = useState('');
-  const [ password, setPassword ] = useState('');
   const [ invalid, setInvalid] = useState(false);
 
   function handlePasswordVisibility() {
@@ -56,9 +54,12 @@ function LoginPage() {
 
   const [ user, setUser ] = useState<dataCredential>();
   const [ profile, setProfile ] = useState();
+  const [ googleInvalid, setGoogleInvalid ] = useState(false);
+  const [ generalError, setGeneralError ] = useState(false);
 
-  const responseMessage = (response: CredentialResponse) => {
+  const responseMessage = async (response: CredentialResponse) => {
     console.log(response);
+
     if(response.credential !== null) {
       const userCredential: dataCredential = jwtDecode(response.credential!);
       console.log('userCredential: ', userCredential);
@@ -66,7 +67,27 @@ function LoginPage() {
 
       // sub is profile specific id
       const { name, email, sub } = userCredential;
-      navigate('/')
+      setInvalid(false);
+      setGoogleInvalid(false);
+      setCredentialError(false);
+      try {
+        const response = await fetch("/api/user/google/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sub
+          }),
+        });
+        if(response.status === 200) {
+          navigate('/');
+        } else if (response.status === 401) {
+          setGoogleInvalid(true);
+        } else {
+          setGeneralError(true);
+        }
+      } catch (error) {
+        console.log("Error with Authentication:", error);
+      }
     }
   }
 
@@ -83,6 +104,9 @@ function LoginPage() {
     const password = passwordEl.value;
     console.log({username, password});
     
+    setInvalid(false);
+    setGoogleInvalid(false);
+    setCredentialError(false);
     try {
       const response = await fetch("/api/user/login", {
         method: "POST",
@@ -95,6 +119,7 @@ function LoginPage() {
       if(response.status === 200) {
         navigate('/');
       } else {
+        setCredentialError(true);
         setInvalid(true);
       }
     } catch (error) {
@@ -164,6 +189,22 @@ function LoginPage() {
               sx={{ width: '96%', alignSelf: 'center', backgroundColor: '#FFCDD2', color: 'red', textAlign: 'center', borderRadius: '7.5px'}}
             >
               Invalid credentials
+            </Typography> 
+            : null
+          }
+          {googleInvalid ? 
+            <Typography
+              sx={{ width: '96%', alignSelf: 'center', backgroundColor: '#FFCDD2', color: 'red', textAlign: 'center', borderRadius: '7.5px'}}
+            >
+              Google account is not connected. Please sign up
+            </Typography> 
+            : null
+          }
+          {generalError ? 
+            <Typography
+              sx={{ width: '96%', alignSelf: 'center', backgroundColor: '#FFCDD2', color: 'red', textAlign: 'center', borderRadius: '7.5px'}}
+            >
+              An error has occurred. Please try again
             </Typography> 
             : null
           }
