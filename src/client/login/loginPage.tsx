@@ -66,8 +66,8 @@ function LoginPage() {
     sub: string;
   };
 
-  const [user, setUser] = useState<dataCredential>();
-  const [profile, setProfile] = useState();
+  const [ user, setUser ] = useState<dataCredential>();
+  const [ profile, setProfile ] = useState();
   const [ googleInvalid, setGoogleInvalid ] = useState(false);
   const [ generalError, setGeneralError ] = useState(false);
 
@@ -218,7 +218,7 @@ function LoginPage() {
           >
             Sign in
           </Typography>
-          {invalid ? 
+          {invalid ? (
             <Typography
               sx={{
                 width: "96%",
@@ -230,8 +230,8 @@ function LoginPage() {
               }}
             >
               Invalid credentials
-            </Typography>
-            : null
+            </Typography> 
+          ): null
           }
           {googleInvalid ? 
             <Typography

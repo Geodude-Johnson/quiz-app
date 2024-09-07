@@ -42,8 +42,9 @@ const userController = {
           .from("user")
           .insert({ username, password: hashedPassword })
           .select();
-        console.log('data: ', data);
-        if(error) throw error;
+        console.log("data: ", data);
+        res.locals.user = data;
+        if (error) throw error;
       } catch (err) {
         next({
           log: `Express error handler error in userController.registerUser middleware: ${err}`,
