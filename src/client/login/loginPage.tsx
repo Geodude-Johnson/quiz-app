@@ -394,7 +394,7 @@ import {
 import { jwtDecode } from "jwt-decode";
 import NavBar from "../navBar";
 import { userAtom, UserType } from "../atoms";
-import { useSetAtom, useAtomValue } from "jotai";
+import { useSetAtom, useAtom } from "jotai";
 
 import MuiCard from "@mui/material/Card";
 import Box from "@mui/material/Box";
@@ -407,13 +407,23 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
+import { useEffect } from "react";
 
 function LoginPage() {
   const navigate = useNavigate();
 
   const [invalid, setInvalid] = useState(false);
-  const setUserAtom = useSetAtom(userAtom);
-  const currUserAtom = useAtomValue(userAtom);
+  const [navigateAfterUpdate, setNavigateAfterUpdate] = useState(false);
+  // const setUserAtom = useSetAtom(userAtom);
+  // const currUserAtom = useAtomValue(userAtom);
+  const [currUserAtom, setUserAtom] = useAtom(userAtom);
+
+  useEffect(() => {
+    if (navigateAfterUpdate) {
+      console.log("User atom updated: ", currUserAtom);
+      navigate("/");
+    }
+  }, [currUserAtom, navigateAfterUpdate]);
 
   function handlePasswordVisibility() {
     const passwordEl = document.getElementById("password");
@@ -507,9 +517,9 @@ function LoginPage() {
     password: "";
     collections: null | string[];
   }
-  // const setUserAtom = useSetAtom(user);
+
   const setUserAtomState = (newUserData: NewUserData) => {
-    console.log('jotai atom: ', newUserData);
+    console.log("jotai atom: ", newUserData);
     setUserAtom((prev: UserType) => ({
       ...prev,
       id: newUserData.id,
@@ -524,6 +534,8 @@ function LoginPage() {
     const passwordEl = document.getElementById("password") as HTMLInputElement;
     const username = usernameEl.value;
     const password = passwordEl.value;
+    console.log({ username, password });
+
     console.log({ username, password });
 
     setInvalid(false);
@@ -553,6 +565,11 @@ function LoginPage() {
       console.log("Error with Authentication:", error);
     }
   };
+
+  // useEffect(() => {
+  //   console.log("Updated user atom after fetch: ", currUserAtom);
+  //   navigate("/");
+  // }, [currUserAtom]);
 
   const [credentialError, setCredentialError] = useState(false);
 

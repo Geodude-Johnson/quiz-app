@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   googleLogout,
@@ -8,7 +8,7 @@ import {
 import { jwtDecode } from "jwt-decode";
 import NavBar from "../navBar";
 import { userAtom, UserType } from "../atoms";
-import { useSetAtom } from "jotai";
+import { useAtom } from "jotai";
 
 import MuiCard from "@mui/material/Card";
 import Box from "@mui/material/Box";
@@ -24,9 +24,18 @@ import { styled } from "@mui/material/styles";
 
 function SignupPage() {
   const navigate = useNavigate();
-  const setUserAtom = useSetAtom(userAtom);
+  const [currUserAtom, setUserAtom] = useAtom(userAtom);
+  const [navigateAfterUpdate, setNavigateAfterUpdate] = useState(false);
+  // const [ username, setUsername ] = useState('');
+  // const [ password, setPassword ] = useState('');
+  const [invalid, setInvalid] = useState(false);
 
-  const [ invalid, setInvalid ] = useState(false);
+  useEffect(() => {
+    if (navigateAfterUpdate) {
+      console.log("User atom updated: ", currUserAtom);
+      navigate("/");
+    }
+  }, [currUserAtom, navigateAfterUpdate]);
 
   function handlePasswordVisibility() {
     const passwordEl = document.getElementById("password");
@@ -65,15 +74,15 @@ function SignupPage() {
     sub: string;
   };
 
-  const [ user, setUser ] = useState<dataCredential>();
-  const [ profile, setProfile ] = useState();
-  const [ googleInvalid, setGoogleInvalid ] = useState(false);
-  const [ generalError, setGeneralError ] = useState(false);
+  const [user, setUser] = useState<dataCredential>();
+  const [profile, setProfile] = useState();
+  const [googleInvalid, setGoogleInvalid] = useState(false);
+  const [generalError, setGeneralError] = useState(false);
 
   const responseMessage = async (response: CredentialResponse) => {
     if (response.credential !== null) {
       const userCredential: dataCredential = jwtDecode(response.credential!);
-      console.log('userCredential: ', userCredential);
+      console.log("userCredential: ", userCredential);
       setUser(userCredential);
 
       const { name, email, sub } = userCredential;
@@ -85,13 +94,13 @@ function SignupPage() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            sub
+            sub,
           }),
         });
-        if(response.status === 200) {
+        if (response.status === 200) {
           const fetchedResponse = await response.json();
           setUserAtomState(fetchedResponse);
-          navigate('/home');
+          navigate("/home");
         } else if (response.status === 401) {
           setGoogleInvalid(true);
         } else {
@@ -116,7 +125,7 @@ function SignupPage() {
   }
   // const setUserAtom = useSetAtom(user);
   const setUserAtomState = (newUserData: NewUserData) => {
-    console.log('jotai atom: ', newUserData);
+    console.log("jotai atom: ", newUserData);
     setUserAtom((prev: UserType) => ({
       ...prev,
       id: newUserData.id,
@@ -136,11 +145,11 @@ function SignupPage() {
     const passwordEl = document.getElementById("password") as HTMLInputElement;
     const username = usernameEl.value;
     const password = passwordEl.value;
-    console.log({username, password});
+    console.log({ username, password });
     setInvalid(false);
     setGoogleInvalid(false);
     setCredentialError(false);
-    
+
     try {
       const response = await fetch("/api/user/register", {
         method: "POST",
@@ -153,7 +162,7 @@ function SignupPage() {
       if (response.status === 200) {
         const fetchedResponse = await response.json();
         setUserAtomState(fetchedResponse);
-        navigate("/");
+        setNavigateAfterUpdate(true);
       } else {
         setInvalid(true);
       }
@@ -257,25 +266,36 @@ function SignupPage() {
               }}
             >
               Username is taken. Please use another username
-            </Typography> 
-          ): null
-          }
-          {googleInvalid ? 
+            </Typography>
+          ) : null}
+          {googleInvalid ? (
             <Typography
-              sx={{ width: '96%', alignSelf: 'center', backgroundColor: '#FFCDD2', color: 'red', textAlign: 'center', borderRadius: '7.5px'}}
+              sx={{
+                width: "96%",
+                alignSelf: "center",
+                backgroundColor: "#FFCDD2",
+                color: "red",
+                textAlign: "center",
+                borderRadius: "7.5px",
+              }}
             >
               Google account already in use. Please sign in
-            </Typography> 
-            : null
-          }
-          {generalError ? 
+            </Typography>
+          ) : null}
+          {generalError ? (
             <Typography
-              sx={{ width: '96%', alignSelf: 'center', backgroundColor: '#FFCDD2', color: 'red', textAlign: 'center', borderRadius: '7.5px'}}
+              sx={{
+                width: "96%",
+                alignSelf: "center",
+                backgroundColor: "#FFCDD2",
+                color: "red",
+                textAlign: "center",
+                borderRadius: "7.5px",
+              }}
             >
               An error has occurred. Please try again
-            </Typography> 
-            : null
-          }
+            </Typography>
+          ) : null}
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -389,6 +409,6 @@ function SignupPage() {
       </SignInContainer>
     </>
   );
-};
+}
 
 export default SignupPage;
