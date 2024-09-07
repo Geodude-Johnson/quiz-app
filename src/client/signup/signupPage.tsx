@@ -91,7 +91,7 @@ function SignupPage() {
         if(response.status === 200) {
           const fetchedResponse = await response.json();
           setUserAtomState(fetchedResponse);
-          navigate('/');
+          navigate('/home');
         } else if (response.status === 401) {
           setGoogleInvalid(true);
         } else {

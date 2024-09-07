@@ -1,8 +1,3 @@
-/**
- * to do: randomize the questions that appear
- * change the review button to be within the specific collection
- */
-
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
@@ -71,19 +66,19 @@ const DirectionsStyle = styled("div")(({ theme }) => ({
 }));
 
 const NextStyle = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText('#ff4081'),
+  color: theme.palette.getContrastText("#ff4081"),
   "&:hover": {
-    backgroundColor: '#FFFFFF',
-    color: 'black',
+    backgroundColor: "#FFFFFF",
+    color: "black",
   },
   backgroundColor: "#ff4081",
   width: "max-content",
   padding: 60,
   borderRadius: "25%",
-  margin: 20, 
-  left: 550,   
+  margin: 20,
+  left: 550,
   top: 75,
-  position: "relative"
+  position: "relative",
 }));
 
 const ReviewAll: React.FC = () => {
@@ -130,18 +125,14 @@ const ReviewAll: React.FC = () => {
     setShowAnswer(false); // Reset showAnswer for the next card
   };
 
-  const RandomOrder = () => {
-
-  };
-  
   return (
     <>
-    <NavBar></NavBar>
+      <NavBar></NavBar>
       <ReviewWelcome color="secondary">GOOD LUCK !</ReviewWelcome>
       <DirectionsStyle>
         <h3> Directions </h3>
         <ul>
-          <li> {" Questions are displayed one at a time"}</li>
+          <li> {" Questions are randomly displayed one at a time"}</li>
           <li> {"Click the question card to display the answer"}</li>
           <li> {"Click the next button to display the next question"}</li>
           <li>
@@ -167,7 +158,12 @@ const ReviewAll: React.FC = () => {
           <h3>Next Question</h3>
         </NextStyle>
       </div>
-      <NextStyle onClick={handleGoBack} style={{left: 0,top: 50, width: '50%', backgroundColor: '#008080'}}>Exit Review</NextStyle>
+      <NextStyle
+        onClick={handleGoBack}
+        style={{ left: 0, top: 50, width: "50%", backgroundColor: "#008080" }}
+      >
+        Exit Review
+      </NextStyle>
     </>
   );
 };
