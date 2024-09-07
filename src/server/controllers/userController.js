@@ -1,7 +1,7 @@
 // add an error catch
 const { NavigateNext } = require("@mui/icons-material");
 const supabase = require("../../db/supabaseClient");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 const userController = {
@@ -9,14 +9,14 @@ const userController = {
     try {
       const { username } = req.body;
       // console.log(username);
-      
+
       const { data, error } = await supabase
         .from("user")
         .select()
         .eq("username", username);
-      console.log('checkUsername data: ', data);
+      console.log("checkUsername data: ", data);
       res.locals.userExists = false;
-      if(data[0]) {
+      if (data[0]) {
         res.locals.userExists = true;
       }
       // console.log(res.locals.userExists);
@@ -30,20 +30,21 @@ const userController = {
     }
   },
   registerUser: async (req, res, next) => {
-    // console.log("triggered registerUser"); 
-    if(!res.locals.userExists) {
+    console.log("triggered registerUser");
+    if (!res.locals.userExists) {
       const { username, password } = req.body;
       console.log(req.body);
-      
+
       const hashedPassword = await bcrypt.hash(password, saltRounds);
 
       try {
         const { data, error } = await supabase
-          .from('user')
+          .from("user")
           .insert({ username, password: hashedPassword })
           .select();
-        console.log('data: ', data);
-        if(error) {
+        console.log("data: ", data);
+        res.locals.user = data;
+        if (error) {
           next(error);
         }
       } catch (err) {
@@ -100,12 +101,16 @@ const userController = {
         .select("*")
         .eq("username", username);
       if (error) {
-        next(error)
+        next(error);
       } else {
-        if(data[0]) {
+        if (data[0]) {
           res.locals.authenticated = false;
-          const isCorrectPassword = await bcrypt.compare(password, data[0].password);
+          const isCorrectPassword = await bcrypt.compare(
+            password,
+            data[0].password
+          );
           if (isCorrectPassword) {
+            res.locals.user = data[0];
             res.locals.authenticated = true;
           }
         }
@@ -117,6 +122,7 @@ const userController = {
         message: { err: "An error occurred in userController.userProfile" },
       });
     }
+
     return next();
   },
 };
