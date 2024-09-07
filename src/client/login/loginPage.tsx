@@ -25,32 +25,9 @@ import { styled } from "@mui/material/styles";
 function LoginPage() {
   const navigate = useNavigate();
 
-  const [username, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [invalid, setInvalid] = useState(false);
   const setUserAtom = useSetAtom(userAtom);
   const currUserAtom = useAtomValue(userAtom);
-
-  const auth = async () => {
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
-      if (response.status === 200) {
-        navigate("/home");
-      } else {
-        setInvalid(true);
-      }
-    } catch (error) {
-      console.log("Error with Authentication:", error);
-    }
-  };
-
   function handlePasswordVisibility() {
     const passwordEl = document.getElementById("password");
     const passwordImageEl = document.getElementById("passwordImage");
@@ -88,16 +65,43 @@ function LoginPage() {
     sub: string;
   };
 
-  const [user, setUser] = useState<dataCredential>();
-  const [profile, setProfile] = useState();
+  const [ user, setUser ] = useState<dataCredential>();
+  const [ profile, setProfile ] = useState();
+  const [ googleInvalid, setGoogleInvalid ] = useState(false);
+  const [ generalError, setGeneralError ] = useState(false);
 
-  const responseMessage = (response: CredentialResponse) => {
+
+  const responseMessage = async (response: CredentialResponse) => {
     console.log(response);
-    if (response.credential !== null) {
+
+    if(response.credential !== null) {
       const userCredential: dataCredential = jwtDecode(response.credential!);
-      console.log("userCredential: ", userCredential);
-      setUser(userCredential);
-      const { name, email } = userCredential;
+      console.log('userCredential: ', userCredential);
+      setUser(userCredential)
+
+      // sub is profile specific id
+      const { name, email, sub } = userCredential;
+      setInvalid(false);
+      setGoogleInvalid(false);
+      setCredentialError(false);
+      try {
+        const response = await fetch("/api/user/google/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sub
+          }),
+        });
+        if(response.status === 200) {
+          navigate('/');
+        } else if (response.status === 401) {
+          setGoogleInvalid(true);
+        } else {
+          setGeneralError(true);
+        }
+      } catch (error) {
+        console.log("Error with Authentication:", error);
+      }
     }
   };
 
@@ -129,7 +133,11 @@ function LoginPage() {
     const passwordEl = document.getElementById("password") as HTMLInputElement;
     const username = usernameEl.value;
     const password = passwordEl.value;
-    console.log({ username, password });
+    console.log({username, password});
+    
+    setInvalid(false);
+    setGoogleInvalid(false);
+    setCredentialError(false);
 
     try {
       const response = await fetch("/api/user/login", {
@@ -148,6 +156,7 @@ function LoginPage() {
         }, 1000); // Small delay to ensure state update is complete
         navigate("/");
       } else {
+        setCredentialError(true);
         setInvalid(true);
       }
     } catch (error) {
@@ -222,8 +231,25 @@ function LoginPage() {
               }}
             >
               Invalid credentials
-            </Typography>
-          ) : null}
+            </Typography> 
+            : null
+          }
+          {googleInvalid ? 
+            <Typography
+              sx={{ width: '96%', alignSelf: 'center', backgroundColor: '#FFCDD2', color: 'red', textAlign: 'center', borderRadius: '7.5px'}}
+            >
+              Google account is not connected. Please sign up
+            </Typography> 
+            : null
+          }
+          {generalError ? 
+            <Typography
+              sx={{ width: '96%', alignSelf: 'center', backgroundColor: '#FFCDD2', color: 'red', textAlign: 'center', borderRadius: '7.5px'}}
+            >
+              An error has occurred. Please try again
+            </Typography> 
+            : null
+          }
           <Box
             component="form"
             onSubmit={handleSubmit}
