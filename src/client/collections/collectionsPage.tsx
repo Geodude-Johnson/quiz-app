@@ -11,9 +11,6 @@ import CardCollections from './components/cardCollections';
  import { blue } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 
-
-
-
 const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
   color: theme.palette.getContrastText(blue[500]),
   backgroundColor: blue[400],
@@ -24,7 +21,6 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
   top: 150, // Adjust top position
   left: 50, // Adjust left position
 }));
-
 
 function HomePage () {
   const navigate = useNavigate();
