@@ -89,7 +89,7 @@ function SignupPage() {
           }),
         });
         if(response.status === 200) {
-          navigate('/');
+          navigate('/home');
         } else if (response.status === 401) {
           setGoogleInvalid(true);
         } else {

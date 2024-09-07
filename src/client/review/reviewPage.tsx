@@ -43,7 +43,7 @@ export const CollectionOptions = styled(Button)(({ theme }) => ({
 const Review = () => {
     const navigate = useNavigate();
     const handleReviewBack = () => {
-      navigate('/');
+      navigate('/home');
     }
     const handleReviewAll = () => {
         navigate('/reviewAll')

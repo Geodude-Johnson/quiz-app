@@ -126,10 +126,7 @@ const ReviewAll: React.FC = () => {
     setShowAnswer(false); // Reset showAnswer for the next card
   };
 
-  const RandomOrder = () => {
 
-  };
-  
   return (
     <>
     <NavBar></NavBar>
