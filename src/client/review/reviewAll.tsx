@@ -192,7 +192,7 @@ const DirectionsStyle = styled("div")(({ theme }) => ({
   width: "50%",
 }));
 
-const ReviewAll: React.FC = (props: any) => {
+const ReviewAll: React.FC = () => {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
