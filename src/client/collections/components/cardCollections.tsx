@@ -50,6 +50,7 @@ const CardCollections = () => {
     useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [step, setStep] = useState(1);
+  const [dbUpdate, setDbUpdate] = useState(false);
 
   const handleAddCard = (e: any) => {
     setAnchorEl(e.currentTarget);
@@ -69,7 +70,7 @@ const CardCollections = () => {
 
   useEffect(() => {
     getCollections();
-  }, []);
+  }, [dbUpdate]);
 
   // get id from state
   let id = 88;
@@ -109,6 +110,7 @@ const CardCollections = () => {
           console.log("collections: ", temp);
         });
         setAllCollections(temp);
+        setDbUpdate(false);
       }
     } catch (error) {
       console.log("Error with getting collections:", error);
@@ -183,6 +185,7 @@ const CardCollections = () => {
         handleClose={handleClosePopover}
         setStep={setStep}
         step={step}
+        setDbUpdate={setDbUpdate}
       />
     </div>
   );

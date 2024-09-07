@@ -15,6 +15,7 @@ interface AddCollectionPopoverProps {
   handleClose: () => void;
   setStep: Dispatch<SetStateAction<number>>;
   step: number;
+  setDbUpdate: Function;
 }
 
 const AddCollectionPopover: React.FC<AddCollectionPopoverProps> = ({
@@ -23,6 +24,7 @@ const AddCollectionPopover: React.FC<AddCollectionPopoverProps> = ({
   handleClose,
   setStep,
   step,
+  setDbUpdate,
 }) => {
   // state to render the colleciton details
   const [collection, setCollection] = useState({
@@ -102,6 +104,7 @@ const AddCollectionPopover: React.FC<AddCollectionPopoverProps> = ({
     } catch (error) {
       console.log("Error with adding new card to collection:", error);
     }
+    setDbUpdate(true);
   };
 
   const handleBack = () => {
