@@ -89,6 +89,8 @@ function SignupPage() {
           }),
         });
         if(response.status === 200) {
+          const fetchedResponse = await response.json();
+          setUserAtomState(fetchedResponse);
           navigate('/');
         } else if (response.status === 401) {
           setGoogleInvalid(true);
@@ -114,7 +116,7 @@ function SignupPage() {
   }
   // const setUserAtom = useSetAtom(user);
   const setUserAtomState = (newUserData: NewUserData) => {
-    console.log(newUserData);
+    console.log('jotai atom: ', newUserData);
     setUserAtom((prev: UserType) => ({
       ...prev,
       id: newUserData.id,

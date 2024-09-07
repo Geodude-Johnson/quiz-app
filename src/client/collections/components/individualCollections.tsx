@@ -38,12 +38,13 @@ function IndividualCollections() {
 
   return (
     <div>
-        {showIndivCollection ? (
+        {showIndivCollection ? (<>
           <StyledCollection>
             <p>Collection data</p>
-            <UserDataset />
             <button onClick={goBack}>back</button>
           </StyledCollection>
+          <UserDataset />
+          </>
         ): <CardCollections />}
     </div>
   );

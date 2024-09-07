@@ -33,7 +33,7 @@ function HomePage() {
       </ColorButton>
       <SearchContainer />
       <CardCollections />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

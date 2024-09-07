@@ -27,22 +27,17 @@ const IndividualCard = (props: cardProps) => {
 
   return (
     <div>
-      <Card sx={{ maxWidth: 345 }}>
-        <CardActionArea onClick={handleClick}>
-          <CardMedia
-            component="img"
-            height="140"
-            image={collectionLogo}
-            alt="collection-logo" />
+      <Card sx={{ maxWidth: 345, minHeight: 200 }}>
+        <CardActionArea onClick={handleClick} sx={{height: '100%'}}>
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom component="div">
               {category}
             </Typography>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom variant="h6" component="div">
               {question}
             </Typography>
             {showAnswer ? 
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography gutterBottom component="div" sx={{color: 'red'}}>
                 {answer}
               </Typography> : null 
             }
