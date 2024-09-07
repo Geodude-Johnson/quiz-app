@@ -232,7 +232,7 @@ function LoginPage() {
             >
               Invalid credentials
             </Typography> 
-            : null
+          ): null
           }
           {googleInvalid ? 
             <Typography
